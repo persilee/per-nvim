@@ -36,8 +36,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       vim.cmd(string.format("highlight %s guibg=NONE ctermbg=NONE", group))
     end
 
-    -- 需要透明的 bufferline 高亮组
     local transparent_groups = {
+      -- 需要透明的 bufferline 高亮组
       "BufferLineFill",
       "BufferLineBackground",
       "BufferLineBufferSelected",
@@ -49,6 +49,32 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       "BufferLineTab",
       "BufferLineTabSelected",
       "BufferLineOffsetSeparator",
+      -- 侧边栏与行号
+      "LineNr",
+      "CursorLineNr",
+      "SignColumn",
+      -- 命令与消息区
+      "CmdLine",
+      "MsgArea",
+      -- 分屏与标签
+      "WinSeparator",
+      "VertSplit",
+      "TabLine",
+      "TabLineFill",
+      "TabLineSel",
+      -- 新增：状态栏核心（解决lualine不透明的关键）
+      "StatusLine",
+      "StatusLineNC", -- 非活动窗口状态栏
+      "StatusLineTerm",
+      "StatusLineTermNC",
+
+      -- 新增：lualine 各模式分区背景（兜底覆盖）
+      "LuaLineNormal",
+      "LuaLineInsert",
+      "LuaLineVisual",
+      "LuaLineReplace",
+      "LuaLineCommand",
+      "LuaLineTerminal",
     }
     for _, group in ipairs(transparent_groups) do
       vim.api.nvim_set_hl(0, group, { bg = "NONE" })
@@ -59,6 +85,26 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       bg = "NONE",
       bold = true,
     })
+
+    -- 可选：光标行的行号强化（和普通行号区分）
+    vim.api.nvim_set_hl(0, "CursorLineNr", {
+      fg = "#FF79C6", -- 行号颜色，用主题强调色
+      bg = "NONE",    -- 行号背景保持透明
+      bold = true,
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  pattern = "*",
+  callback = function()
+    vim.defer_fn(function()
+      vim.opt.guicursor = "n-v-c:block-Cursor,i-ci:ver25-CursorInsert,r-cr:hor20-CursorReplace"
+      -- ===== 新增：光标本身颜色 =====
+      vim.api.nvim_set_hl(0, "Cursor", { fg = "#1e1e2e", bg = "#FF79C6" })        -- 普通模式光标
+      vim.api.nvim_set_hl(0, "CursorInsert", { fg = "#1e1e2e", bg = "#50fa7b" })  -- 插入模式光标
+      vim.api.nvim_set_hl(0, "CursorReplace", { fg = "#1e1e2e", bg = "#bd93f9" }) -- 替换模式光标
+    end, 100)
   end,
 })
 

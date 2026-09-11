@@ -23,7 +23,7 @@ return -- 使用 lazy.nvim 安装示例
 
       layout = {
         resize_to_content = true,
-        min_width = 0.15,
+        min_width = 0.16,
         -- width = 0.15,
         placement = "edge",
         default_direction = "prefer_right",

@@ -2,7 +2,7 @@
 
 -- 定义你想用的主题名字
 -- 可选: "tokyonight" 或 "catppuccin"
-local active_theme = "kanagawa"
+local active_theme = "nvimpire"
 
 -- 定义主题配置表
 local themes = {
@@ -42,6 +42,17 @@ local themes = {
       -- 可选：注释使用斜体
       italic_comment = true,
     },
+  },
+
+  --nvimpire
+  nvimpire = {
+    "colevoss/nvimpire",
+    config = function()
+      require("nvimpire").setup({
+        transparent = true
+      })
+      vim.cmd("colorscheme nvimpire")
+    end,
   },
 
   -- Kanagawa

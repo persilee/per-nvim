@@ -16,8 +16,18 @@ vim.opt.clipboard = "unnamedplus"
 -- 禁止自动注释续行
 vim.opt.formatoptions:remove({ "c", "r", "o" })
 
-vim.opt.cursorline = true -- 开启光标行高亮（可以只高亮行号）
--- vim.opt.cursorlineopt = "number" -- 只高亮行号，而不是整行
+vim.opt.guicursor = {
+  -- 普通/可视/命令模式：方块光标，绑定 Cursor 高亮组
+  "n-v-c:block-Cursor",
+  -- 插入模式：25%宽度竖线，绑定 CursorInsert 高亮组
+  "i-ci:ver25-CursorInsert",
+  -- 替换模式：20%高度横线，绑定 CursorReplace 高亮组
+  "r-cr:hor20-CursorReplace",
+  -- 操作符等待模式：半高度方块
+  "o:hor50-Cursor",
+}
+vim.opt.cursorline = true        -- 开启光标行高亮（可以只高亮行号）
+vim.opt.cursorlineopt = "number" -- 只高亮行号，而不是整行
 
 -- 全局 LSP 诊断配置
 vim.diagnostic.config({

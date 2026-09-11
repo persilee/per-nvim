@@ -86,3 +86,10 @@ map("n", "<C-a>", "gg0vG$", opts)
 map("n", "dw", "diw", opts)
 -- 搜索光标下的单词
 map("n", "<C-f>", "*")
+
+-- 一键设置光标样式+颜色
+vim.keymap.set("n", "<leader>cc", function()
+  vim.opt.guicursor = "n:block-Cursor"
+  vim.api.nvim_set_hl(0, "Cursor", { fg = "#1e1e2e", bg = "#ff79c6" })
+  vim.notify("光标已切换为粉色方块", vim.log.levels.INFO)
+end, { desc = "设置光标为粉色方块样式", silent = true })
