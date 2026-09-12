@@ -2,7 +2,7 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -12,6 +12,7 @@ vim.opt.swapfile = false
 vim.opt.mouse = "a"
 vim.opt.laststatus = 3
 vim.opt.clipboard = "unnamedplus"
+vim.opt.autoread = true
 
 -- 禁止自动注释续行
 vim.opt.formatoptions:remove({ "c", "r", "o" })

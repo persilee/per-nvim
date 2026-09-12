@@ -85,7 +85,12 @@ local themes = {
       require("catppuccin").setup({
         flavour = "mocha", -- 可选: "latte", "frappe", "macchiato", "mocha"
         background = { light = "latte", dark = "mocha" },
-        transparent_background = true,
+        transparent_background = true, -- 浮动窗口也设为透明（可选）
+            float = {
+          transparent = true,
+        },
+      -- 侧边栏透明（默认已跟随主背景，可显式指定）
+      sidebars = { "neo-tree", "terminal" },
         term_colors = true,
         styles = {
           comments = { "italic" },
@@ -103,15 +108,7 @@ local themes = {
       vim.cmd("colorscheme catppuccin")
     end,
     opts = {
-      flavour = "macchiato",
-      transparent_background = true, --开启背景透明
-      -- 浮动窗口也设为透明（可选）
-      float = {
-        transparent = true,
-      },
-      -- 侧边栏透明（默认已跟随主背景，可显式指定）
-      sidebars = { "neo-tree", "terminal" },
-    },
+         },
   },
 
   -- gruvbox
