@@ -86,13 +86,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       bold = true,
     })
 
-    -- ===== 新增：光标所在行高亮 =====
-    vim.api.nvim_set_hl(0, "CursorLine", {
-      bg = "#ffffff",  -- 背景色，和你之前的 lualine 同色系
-      blend = 60,      -- 透明度 0-100：数值越小越实，越大越透
-    })
-
-    -- 可选：光标行的行号强化（和普通行号区分）
+   -- 可选：光标行的行号强化（和普通行号区分）
     vim.api.nvim_set_hl(0, "CursorLineNr", {
       fg = "#FF79C6", -- 行号颜色，用主题强调色
       bg = "NONE",    -- 行号背景保持透明

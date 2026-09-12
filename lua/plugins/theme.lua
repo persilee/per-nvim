@@ -49,7 +49,7 @@ local themes = {
     "colevoss/nvimpire",
     config = function()
       require("nvimpire").setup({
-        transparent = true
+        transparent = false,
       })
       vim.cmd("colorscheme nvimpire")
       -- 主题加载后覆盖注释颜色
@@ -57,6 +57,13 @@ local themes = {
         fg = "#b2bbc2",  
         italic = true,
       })
+
+      -- ===== 新增：光标所在行高亮 =====
+      -- vim.api.nvim_set_hl(0, "CursorLine", {
+      --   bg = "#ffffff",  -- 背景色，和你之前的 lualine 同色系
+      --   blend = 60,      -- 透明度 0-100：数值越小越实，越大越透
+      -- })
+
     end,
   },
 

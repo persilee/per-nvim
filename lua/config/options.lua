@@ -27,8 +27,7 @@ vim.opt.guicursor = {
   "o:hor50-Cursor",
 }
 vim.opt.cursorline = true        -- 开启光标行高亮（可以只高亮行号）
--- vim.opt.cursorlineopt = "number" -- 只高亮行号，而不是整行
-vim.opt.termguicolors = true
+vim.opt.cursorlineopt = "number" -- 只高亮行号，而不是整行
 
 -- 全局 LSP 诊断配置
 vim.diagnostic.config({
@@ -38,7 +37,7 @@ vim.diagnostic.config({
   -- update_in_insert = false, -- 插入模式不更新（可选）
 })
 
--- 创建 :H 命令，在新 tab 中打开帮助
+-- 创建 :H 命令，在新 tab 中打开帮
 vim.api.nvim_create_user_command("Hv", function(opts)
   vim.cmd("vertical help " .. (opts.args ~= "" and opts.args or ""))
 end, { nargs = "*", complete = "help" })
