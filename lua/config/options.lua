@@ -27,7 +27,8 @@ vim.opt.guicursor = {
   "o:hor50-Cursor",
 }
 vim.opt.cursorline = true        -- 开启光标行高亮（可以只高亮行号）
-vim.opt.cursorlineopt = "number" -- 只高亮行号，而不是整行
+-- vim.opt.cursorlineopt = "number" -- 只高亮行号，而不是整行
+vim.opt.termguicolors = true
 
 -- 全局 LSP 诊断配置
 vim.diagnostic.config({
