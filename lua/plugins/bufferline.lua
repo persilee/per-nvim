@@ -103,11 +103,6 @@ return {
 
       -- 可选：选中指示器也透明（如果左边竖线还有背景）
       indicator_selected = { bg = "NONE" },
-
-      -- 可选：文件图标也透明（如果图标还有背景）
-      icon = { bg = "NONE" },
-      icon_selected = { bg = "NONE" },
-      icon_visible = { bg = "NONE" },
     },
   },
 }
