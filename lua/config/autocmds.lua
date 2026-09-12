@@ -92,6 +92,16 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       bg = "NONE",    -- 行号背景保持透明
       bold = true,
     })
+    
+    -- ===== 新增：修改注释颜色 =====
+    vim.api.nvim_set_hl(0, "Comment", {
+      fg = "#b2bbc2",  -- 注释主色，推荐柔紫色，适配粉色系主题
+      italic = true,    -- 保留斜体，不需要就设为 false
+      bold = false,     -- 不加粗
+    })
+
+    -- 可选：Treesitter 语义注释兜底（大部分情况自动继承 Comment，不生效再加）
+    vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
   end,
 })
 
