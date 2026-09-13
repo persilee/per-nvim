@@ -29,7 +29,7 @@ return {
           -- 3. 否则，交还给 fallback（比如插入 <Tab> 字符）
           return false -- 等价于触发 'fallback'
         end,
-        "fallback",    -- 安全兜底（虽然函数已处理，但保留更健壮）
+        "fallback", -- 安全兜底（虽然函数已处理，但保留更健壮）
       },
 
       -- 可选：Shift+Tab 处理上一个
@@ -113,8 +113,8 @@ return {
             },
           },
           columns = {
-            { "kind_icon",  "kind",              gap = 1 },
-            { "label",      "label_description", gap = 1 },
+            { "kind_icon", "kind", gap = 1 },
+            { "label", "label_description", gap = 1 },
             { "source_name" },
           },
         },
@@ -139,6 +139,27 @@ return {
 
     sources = {
       default = { "lsp", "path", "snippets", "buffer" },
+    },
+
+    cmdline = {
+      sources = function()
+        local cmd_type = vim.fn.getcmdtype()
+        if cmd_type == "/" then
+          return { "buffer" }
+        end
+        if cmd_type == ":" then
+          return { "cmdline" }
+        end
+        return {}
+      end,
+      keymap = {
+        preset = "super-tab",
+      },
+      completion = {
+        menu = {
+          auto_show = true,
+        },
+      },
     },
 
     fuzzy = { implementation = "prefer_rust_with_warning" },

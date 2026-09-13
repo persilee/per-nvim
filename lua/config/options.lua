@@ -13,6 +13,9 @@ vim.opt.mouse = "a"
 vim.opt.laststatus = 3
 vim.opt.clipboard = "unnamedplus"
 vim.opt.autoread = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = false
 
 -- 禁止自动注释续行
 vim.opt.formatoptions:remove({ "c", "r", "o" })
@@ -27,7 +30,7 @@ vim.opt.guicursor = {
   -- 操作符等待模式：半高度方块
   "o:hor50-Cursor",
 }
-vim.opt.cursorline = true        -- 开启光标行高亮（可以只高亮行号）
+vim.opt.cursorline = true -- 开启光标行高亮（可以只高亮行号）
 vim.opt.cursorlineopt = "number" -- 只高亮行号，而不是整行
 
 -- 全局 LSP 诊断配置

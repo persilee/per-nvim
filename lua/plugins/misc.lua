@@ -75,13 +75,13 @@ return {
 
       -- 1. 双字符精准跳转（主力推荐，重名率极低）
       -- 普通/可视/操作符待决模式通用，可配合 d/c/y 使用
-      map({ "n", "o", "v" }, "s", "<cmd>HopChar2<cr>", opts)
+      map({ "n", "o", "v" }, "<leader>js", "<cmd>HopChar2<cr>", opts)
 
       -- 2. 单字符全局跳转（替代原生 f，支持跨多行）
-      map({ "n", "o", "v" }, "f", "<cmd>HopChar1<cr>", opts)
+      map({ "n", "o", "v" }, "<leader>jf", "<cmd>HopChar1<cr>", opts)
 
       -- 3. 仅当前行内反向单字符跳转（模拟原生 F 行为）
-      map({ "n", "o", "v" }, "F", "<cmd>HopChar1CurrentLineBC<cr>", opts)
+      map({ "n", "o", "v" }, "<leader>jF", "<cmd>HopChar1CurrentLineBC<cr>", opts)
 
       -- 4. 跳转到任意行开头
       map("n", "<leader>jl", "<cmd>HopLine<cr>", { desc = "Hop 跳转到行" })
