@@ -66,6 +66,13 @@ return {
       desc = "Buffers",
     },
     {
+      "<leader><space>",
+      function()
+        Snacks.picker.smart()
+      end,
+      desc = "智能查找",
+    },
+    {
       "<leader>ff",
       function()
         Snacks.picker.files()

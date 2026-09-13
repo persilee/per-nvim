@@ -86,18 +86,18 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       bold = true,
     })
 
-   -- 可选：光标行的行号强化（和普通行号区分）
+    -- 可选：光标行的行号强化（和普通行号区分）
     vim.api.nvim_set_hl(0, "CursorLineNr", {
       fg = "#FF79C6", -- 行号颜色，用主题强调色
-      bg = "NONE",    -- 行号背景保持透明
+      bg = "NONE", -- 行号背景保持透明
       bold = true,
     })
-    
+
     -- ===== 新增：修改注释颜色 =====
     vim.api.nvim_set_hl(0, "Comment", {
-      fg = "#b2bbc2",  -- 注释主色，推荐柔紫色，适配粉色系主题
-      italic = true,    -- 保留斜体，不需要就设为 false
-      bold = false,     -- 不加粗
+      fg = "#b2bbc2", -- 注释主色，推荐柔紫色，适配粉色系主题
+      italic = true, -- 保留斜体，不需要就设为 false
+      bold = false, -- 不加粗
     })
 
     -- 可选：Treesitter 语义注释兜底（大部分情况自动继承 Comment，不生效再加）
@@ -111,8 +111,8 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.defer_fn(function()
       vim.opt.guicursor = "n-v-c:block-Cursor,i-ci:ver25-CursorInsert,r-cr:hor20-CursorReplace"
       -- ===== 新增：光标本身颜色 =====
-      vim.api.nvim_set_hl(0, "Cursor", { fg = "#1e1e2e", bg = "#FF79C6" })        -- 普通模式光标
-      vim.api.nvim_set_hl(0, "CursorInsert", { fg = "#1e1e2e", bg = "#50fa7b" })  -- 插入模式光标
+      vim.api.nvim_set_hl(0, "Cursor", { fg = "#1e1e2e", bg = "#FF79C6" }) -- 普通模式光标
+      vim.api.nvim_set_hl(0, "CursorInsert", { fg = "#1e1e2e", bg = "#50fa7b" }) -- 插入模式光标
       vim.api.nvim_set_hl(0, "CursorReplace", { fg = "#1e1e2e", bg = "#bd93f9" }) -- 替换模式光标
     end, 100)
   end,
@@ -122,10 +122,10 @@ vim.api.nvim_create_autocmd("VimEnter", {
 local C = require("colors.color1")
 local function apply_custom_highlights()
   -- 💠 设置透明补全菜单
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })                            -- 所有浮窗透明
-  vim.api.nvim_set_hl(0, "Pmenu", { bg = "NONE", blend = 0 })                       -- 补全菜单透明
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" }) -- 所有浮窗透明
+  vim.api.nvim_set_hl(0, "Pmenu", { bg = "NONE", blend = 0 }) -- 补全菜单透明
   vim.api.nvim_set_hl(0, "PmenuSel", { bg = C.pink, fg = C.surface0, bold = true }) -- 选中项
-  vim.api.nvim_set_hl(0, "FloatBorder", { fg = C.ice_white, bg = "NONE" })          -- 边框保留
+  vim.api.nvim_set_hl(0, "FloatBorder", { fg = C.ice_white, bg = "NONE" }) -- 边框保留
 
   vim.api.nvim_set_hl(0, "CurSearch", {
     bg = C.mint_cream,
@@ -144,4 +144,15 @@ end
 -- 应用高亮
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = apply_custom_highlights,
+})
+
+-- 启动完成后强制隐藏标签栏
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    -- 延迟一帧执行，确保 bufferline 渲染完成后再覆盖设置
+    vim.schedule(function()
+      vim.o.showtabline = 0
+    end)
+  end,
+  once = true,
 })

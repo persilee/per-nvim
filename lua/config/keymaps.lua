@@ -10,7 +10,7 @@ vim.g.mapleader = " " -- 空格为 leader
 
 -- 下一个 / 上一个 Tab
 map("n", "<leader><PageDown>", ":BufferLineCycleNext<CR>", opts) -- 下一个 Tab
-map("n", "<leader><PageUp>", ":BufferLineCyclePrev<CR>", opts)   -- 上一个 Tab
+map("n", "<leader><PageUp>", ":BufferLineCyclePrev<CR>", opts) -- 上一个 Tab
 
 -- 快速跳转到指定 Tab（1~9）
 for i = 1, 9 do
@@ -26,14 +26,26 @@ map("n", "<leader>c", function()
 end, opts)
 
 -- 分屏操作
-map("n", "<leader><Left>", "<C-w>h", opts)  -- 移动到左边窗口
-map("n", "<leader><Down>", "<C-w>j", opts)  -- 移动到下边窗口
-map("n", "<leader><Up>", "<C-w>k", opts)    -- 移动到上边窗口
+map("n", "<leader><Left>", "<C-w>h", opts) -- 移动到左边窗口
+map("n", "<leader><Down>", "<C-w>j", opts) -- 移动到下边窗口
+map("n", "<leader><Up>", "<C-w>k", opts) -- 移动到上边窗口
 map("n", "<leader><Right>", "<C-w>l", opts) -- 移动到右边窗口
 
 -- 文件操作
 map("n", "<leader>w", ":w<CR>", opts) -- 保存
 map("n", "<leader>q", ":q<CR>", opts) -- 关闭
+map("n", "<leader>Q", ":wq<CR>", opts) -- 关闭
+
+-- 行移动
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+-- 调整窗口大小
+vim.keymap.set("n", "<A-Up>", ":resize +2<CR>", { desc = "Increase window height" })
+vim.keymap.set("n", "<A-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
+vim.keymap.set("n", "<A-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<A-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
 
 -- 在终端模式中按 Esc 直接退出到普通模式
 map("t", "<Esc>", [[<C-\><C-n>]], opts)
@@ -59,7 +71,8 @@ map("n", "<Esc>", "<cmd>nohlsearch<CR>", opts)
 
 -- 打开一个浮动终端
 local float_term = require("customs.float_trem")
-map("n", "<leader>ft", float_term.open, opts)
+map("n", "<leader>tf", float_term.open, opts)
+map("n", "<leader>tb", "<cmd>10below terminal<cr>", opts)
 
 -- 打开诊断窗口
 map("n", "<leader>xx", ":Trouble diagnostics toggle<CR>", opts)

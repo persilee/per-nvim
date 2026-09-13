@@ -2,7 +2,7 @@ return {
   -- 状态栏
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-mini/mini.icons" },
     opts = function()
       --- nvimpire 主题对应色值（Dracula 色系）
       local c = {
@@ -65,7 +65,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     event = "VeryLazy",
-    build = ":TSUpdate",                                           -- lazy.nvim 里用 build，不是 run
+    build = ":TSUpdate", -- lazy.nvim 里用 build，不是 run
     opts = {
       ensure_installed = { "c", "cpp", "lua", "python", "cmake" }, -- 必装语言
       highlight = { enable = true },

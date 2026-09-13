@@ -4,20 +4,25 @@ local tab_bg = "#61afef"
 return {
   "akinsho/bufferline.nvim",
   version = "*",
-  dependencies = "nvim-tree/nvim-web-devicons",
+  lazy = false,
+  dependencies = "nvim-mini/mini.icons",
+
+  enabled = true,
 
   opts = {
     options = {
       -- 数字显示：none（简洁）或 ordinal（1,2,3）
       numbers = "ordinal",
-
       themable = true,
+      always_show_fufferline = false,
 
       -- 自定义过滤规则，不显示无名称的空缓冲区
       custom_filter = function(buf_number)
         local bufname = vim.api.nvim_buf_get_name(buf_number)
         -- 过滤掉空名称的缓冲区
-        if bufname == "" then return false end
+        if bufname == "" then
+          return false
+        end
         return true
       end,
 
@@ -27,7 +32,7 @@ return {
         -- 获取所有 buffer（仅限已列出并没有被隐藏的）
         local buffers = vim.tbl_filter(function(b)
           return vim.api.nvim_buf_get_option(b.bufnr, "buftype") == ""
-              and vim.api.nvim_buf_get_option(b.bufnr, "buflisted")
+            and vim.api.nvim_buf_get_option(b.bufnr, "buflisted")
         end, vim.fn.getbufinfo({ buflisted = 1 }))
 
         -- 如果有多个 buffer，删除当前 buffer
@@ -97,9 +102,9 @@ return {
       offset_separator = { bg = "NONE" },
 
       -- 新增：序号数字透明（核心修复）
-      numbers = { bg = "NONE" },          -- 未选中标签的序号
+      numbers = { bg = "NONE" }, -- 未选中标签的序号
       numbers_selected = { bg = "NONE" }, -- 选中标签的序号
-      numbers_visible = { bg = "NONE" },  -- 可见但未选中标签的序号
+      numbers_visible = { bg = "NONE" }, -- 可见但未选中标签的序号
 
       -- 可选：选中指示器也透明（如果左边竖线还有背景）
       indicator_selected = { bg = "NONE" },

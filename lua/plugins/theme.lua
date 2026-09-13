@@ -54,7 +54,7 @@ local themes = {
       vim.cmd("colorscheme nvimpire")
       -- 主题加载后覆盖注释颜色
       vim.api.nvim_set_hl(0, "Comment", {
-        fg = "#b2bbc2",  
+        fg = "#b2bbc2",
         italic = true,
       })
 
@@ -63,7 +63,6 @@ local themes = {
       --   bg = "#ffffff",  -- 背景色，和你之前的 lualine 同色系
       --   blend = 60,      -- 透明度 0-100：数值越小越实，越大越透
       -- })
-
     end,
   },
 
@@ -86,11 +85,11 @@ local themes = {
         flavour = "mocha", -- 可选: "latte", "frappe", "macchiato", "mocha"
         background = { light = "latte", dark = "mocha" },
         transparent_background = true, -- 浮动窗口也设为透明（可选）
-            float = {
+        float = {
           transparent = true,
         },
-      -- 侧边栏透明（默认已跟随主背景，可显式指定）
-      sidebars = { "neo-tree", "terminal" },
+        -- 侧边栏透明（默认已跟随主背景，可显式指定）
+        sidebars = { "neo-tree", "terminal" },
         term_colors = true,
         styles = {
           comments = { "italic" },
@@ -107,8 +106,7 @@ local themes = {
       })
       vim.cmd("colorscheme catppuccin")
     end,
-    opts = {
-         },
+    opts = {},
   },
 
   -- gruvbox
@@ -116,7 +114,7 @@ local themes = {
     "ellisonleao/gruvbox.nvim",
     config = function()
       require("gruvbox").setup({
-        contrast = "medium",      -- 可选: "hard", "medium", "soft"
+        contrast = "medium", -- 可选: "hard", "medium", "soft"
         transparent_mode = false, -- 背景透明
       })
       vim.cmd("colorscheme gruvbox")
@@ -186,7 +184,7 @@ local themes = {
     name = "rose-pine",
     config = function()
       require("rose-pine").setup({
-        variant = "auto",      -- auto, main, moon, or dawn
+        variant = "auto", -- auto, main, moon, or dawn
         dark_variant = "main", -- main, moon, or dawn
         dim_inactive_windows = false,
         extend_background_behind_borders = true,
@@ -194,7 +192,7 @@ local themes = {
         enable = {
           terminal = true,
           legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
-          migrations = true,        -- Handle deprecated options automatically
+          migrations = true, -- Handle deprecated options automatically
         },
       })
       vim.cmd("colorscheme rose-pine")
@@ -207,9 +205,9 @@ local themes = {
     config = function()
       require("onedark").setup({
         style = "darker",
-        transparent = true,           -- Show/hide background
-        term_colors = true,           -- Change terminal color as per the selected theme style
-        ending_tildes = false,        -- Show the end-of-buffer tildes. By default they are hidden
+        transparent = true, -- Show/hide background
+        term_colors = true, -- Change terminal color as per the selected theme style
+        ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
         cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
 
         -- code_style = {
@@ -248,7 +246,7 @@ local themes = {
   github = {
     "projekt0n/github-nvim-theme",
     name = "github-theme",
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       require("github-theme").setup({
