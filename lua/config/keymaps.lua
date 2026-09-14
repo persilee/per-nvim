@@ -70,9 +70,8 @@ map("n", "vl", "V", opts)
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", opts)
 
 -- 打开一个浮动终端
-local float_term = require("customs.float_trem")
-map("n", "<leader>tf", float_term.open, opts)
-map("n", "<leader>tb", "<cmd>10below terminal<cr>", opts)
+-- local float_term = require("customs.float_trem")
+-- map("n", "<leader>tf", float_term.open, opts)
 
 -- 打开诊断窗口
 map("n", "<leader>xx", ":Trouble diagnostics toggle<CR>", opts)

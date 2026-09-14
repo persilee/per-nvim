@@ -96,6 +96,8 @@ local themes = {
           -- functions = { "bold" },
           keywords = { "bold" },
         },
+        -- 开启 notify 高亮适配
+        notify = true,
         integrations = {
           telescope = true,
           nvimtree = true,

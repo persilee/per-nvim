@@ -47,7 +47,7 @@ return {
     },
 
     notifier = {
-      enabled = true,
+      enabled = false,
       timeout = 2000,
     },
 
@@ -55,6 +55,39 @@ return {
     dashboard = { enabled = true },
     input = { enabled = true },
     animate = {},
+
+    terminal = {
+      enabled = true,
+      -- 终端默认外观与行为
+      win = {
+        position = "bottom", -- 底部显示，可选 float/top/left/right
+        height = 0.3, -- 占窗口高度的 30%
+        border = "single",
+      },
+      auto_insert = true, -- 打开终端自动进入插入模式
+      shell = "/bin/zsh", -- Mac 系统默认用 zsh
+      -- 终端内自定义快捷键
+      keys = {
+        q = "hide", -- 终端内按 q 快速隐藏
+        ["<C-l>"] = function(self)
+          self:send("clear\r")
+        end, -- Ctrl+l 清屏
+        ["<Esc>"] = {
+          function(self)
+            self.esc_timer = self.esc_timer or vim.loop.new_timer()
+            if self.esc_timer:is_active() then
+              self.esc_timer:stop()
+              vim.cmd("stopinsert") -- 双击：退出插入模式
+            else
+              self.esc_timer:start(200, 0, function() end)
+              return "<Esc>" -- 单击：转发给终端
+            end
+          end,
+          mode = "t",
+          expr = true,
+        },
+      },
+    },
   },
 
   keys = {
@@ -65,13 +98,13 @@ return {
       end,
       desc = "Buffers",
     },
-    -- {
-    --   "<leader><space>",
-    --   function()
-    --     Snacks.picker.smart()
-    --   end,
-    --   desc = "智能查找",
-    -- },
+    {
+      "<leader><space>",
+      function()
+        Snacks.picker.smart()
+      end,
+      desc = "智能查找",
+    },
     {
       "<leader>ff",
       function()
@@ -202,13 +235,37 @@ return {
       end,
       desc = "LSP Workspace Symbols",
     },
-
+    -- 🔹 切换底部默认终端（最常用）
     {
-      "<leader>nh",
+      "<leader>tt",
       function()
-        Snacks.picker.notifications()
+        Snacks.terminal()
       end,
-      desc = "Notification History",
+      desc = "终端：切换底部终端",
+    },
+    -- 🔹 打开浮动终端
+    {
+      "<leader>tf",
+      function()
+        Snacks.terminal(nil, { win = { position = "float", width = 0.8, height = 0.8 } })
+      end,
+      desc = "终端：打开浮动终端",
+    },
+    -- 🔹 列出所有终端会话
+    {
+      "<leader>tl",
+      function()
+        Snacks.terminal.list()
+      end,
+      desc = "终端：列出所有会话",
+    },
+    -- 新建一个独立终端会话
+    {
+      "<leader>tn",
+      function()
+        Snacks.terminal.new()
+      end,
+      desc = "终端：新建会话",
     },
   },
 }

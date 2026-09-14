@@ -41,7 +41,21 @@ return {
       },
 
       notify = {
-        enabled = false,
+        enabled = true,
+        view = "notify",
+        background_colour = "#1e1e2e",
+      },
+
+      -- 过滤保存文件通知
+      routes = {
+        {
+          filter = {
+            event = "notify",
+            kind = "warn",
+            find = "Config Change Detected", -- 匹配包含的提示
+          },
+          opts = { skip = true }, -- 直接跳过，不显示也不记入历史
+        },
       },
 
       -- 预设
@@ -51,7 +65,50 @@ return {
         long_message_to_split = true,
         inc_rename = false,
         lsp_doc_border = false,
+        incognito = false,
       },
     })
   end,
+  keys = {
+    -- 查看完整通知历史
+    {
+      "<leader>nh",
+      function()
+        require("noice").cmd("history")
+      end,
+      desc = "通知：查看历史消息",
+    },
+    -- 快速查看最近一条通知
+    {
+      "<leader>nl",
+      function()
+        require("noice").cmd("last")
+      end,
+      desc = "通知：查看最近一条",
+    },
+    -- 只查看错误历史
+    {
+      "<leader>ne",
+      function()
+        require("noice").cmd("errors")
+      end,
+      desc = "通知：查看错误历史",
+    },
+    -- 清除所有悬浮通知
+    {
+      "<leader>nd",
+      function()
+        require("noice").cmd("dismiss")
+      end,
+      desc = "通知：清除所有通知",
+    },
+    -- 打开选择器搜索历史
+    {
+      "<leader>np",
+      function()
+        require("noice").cmd("pick")
+      end,
+      desc = "通知：搜索历史消息",
+    },
+  },
 }
