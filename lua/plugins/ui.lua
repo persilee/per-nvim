@@ -3,6 +3,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-mini/mini.icons" },
+    enabled = false,
     opts = function()
       --- nvimpire 主题对应色值（Dracula 色系）
       local c = {

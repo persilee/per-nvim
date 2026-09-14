@@ -1,21 +1,31 @@
 -- lua/plugins/noice.lua
 return {
   "folke/noice.nvim",
+  event = "VeryLazy",
+  enabled = true,
   dependencies = {
     "MunifTanjim/nui.nvim", -- 必须
+    "rcarriga/nvim-notify",
   },
   config = function()
     require("noice").setup({
       -- 命令行配置
       cmdline = {
-        enabled = true,         -- 启用 Noice 命令行
-        view = "cmdline_popup", -- 浮窗形式
+        enabled = true, -- 启用 Noice 命令行
+        view = "cmdline", -- 浮窗形式
         format = {
           cmdline = { pattern = "^:", icon = "", lang = "vim" },
           search_down = { pattern = "^/", icon = "", lang = "regex" },
           search_up = { pattern = "^%?", icon = "", lang = "regex" },
           lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" },
         },
+      },
+
+      messages = {
+        enabled = true,
+        view = "notify", -- 普通消息用状态栏mini模式，不打扰
+        view_error = "popup", -- 错误消息用弹窗
+        view_warn = "mini",
       },
 
       -- LSP 配置
@@ -36,8 +46,8 @@ return {
 
       -- 预设
       presets = {
-        bottom_search = false,
-        command_palette = false,
+        bottom_search = true,
+        command_palette = true,
         long_message_to_split = true,
         inc_rename = false,
         lsp_doc_border = false,
