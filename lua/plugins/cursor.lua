@@ -3,20 +3,33 @@ return {
     "mg979/vim-visual-multi",
     branch = "master",
     keys = {
-      { "<C-n>", mode = { "n", "x" }, desc = "多光标：选中下一个匹配项" },
+      -- 核心匹配操作
+      { "<leader>mn", mode = { "n", "x" }, "<Plug>(VM-Find-Under)", desc = "多光标：选中下一个匹配项" },
+      { "<leader>mp", mode = { "n", "x" }, "<Plug>(VM-Find-Prev)", desc = "多光标：选中上一个匹配项" },
       {
-        "<C-S-n>",
+        "<leader>ma",
         mode = { "n", "x" },
         "<Plug>(VM-Find-Under)<Plug>(VM-Select-All)",
-        desc = "多光标：选中所有匹配项",
+        desc = "多光标：全选所有匹配项",
       },
-      { "<Esc>", mode = "n", "<Plug>(VM-Exit)", desc = "多光标：退出" },
+
+      -- 光标管理
+      { "<leader>ms", mode = "n", "<Plug>(VM-Skip-Region)", desc = "多光标：跳过当前匹配项" },
+      { "<leader>mr", mode = "n", "<Plug>(VM-Remove-Region)", desc = "多光标：移除当前光标" },
+      { "<leader>mq", mode = "n", "<Plug>(VM-Exit)", desc = "多光标：退出多光标模式" },
+
+      -- 垂直逐行添加光标（列编辑场景）
+      { "<M-S-j>", mode = "n", "<Plug>(VM-Add-Cursor-Down)", desc = "多光标：向下添加一行光标" },
+      { "<M-S-k>", mode = "n", "<Plug>(VM-Add-Cursor-Up)", desc = "多光标：向上添加一行光标" },
+
+      -- 模式切换
+      { "<leader>mt", mode = "n", "<Plug>(VM-Toggle-Mode)", desc = "多光标：切换扩展/光标模式" },
     },
     init = function()
       -- 关闭默认映射，自定义快捷键
       vim.g.VM_default_mappings = 0
       -- 适配 Catppuccin 风格的配色主题
-      vim.g.VM_theme = "nord"
+      vim.g.VM_theme = "dracula"
     end,
   },
   {
