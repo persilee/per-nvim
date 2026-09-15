@@ -52,30 +52,81 @@ return {
     },
     -- Oil 缓冲区内部快捷键
     keymaps = {
+      -- 禁用默认 Ctrl+h 快捷键
+      -- Oil 默认该键用于窗口导航/返回父目录，这里禁用避免和终端、窗口移动类快捷键冲突
       ["<C-h>"] = false,
+
+      -- 禁用默认 Ctrl+l 快捷键
+      -- Oil 默认该键用于刷新/进入目录，这里禁用避免和清屏、窗口向右移动等快捷键冲突
       ["<C-l>"] = false,
+
+      -- 禁用默认 Ctrl+k 快捷键
+      -- Oil 默认该键用于向上移动光标/窗口导航，禁用防止和其他插件快捷键冲突
       ["<C-k>"] = false,
+
+      -- 禁用默认 Ctrl+j 快捷键
+      -- Oil 默认该键用于向下移动光标/窗口导航，禁用防止和其他插件快捷键冲突
       ["<C-j>"] = false,
+
+      -- 绑定 Ctrl+r 为「刷新当前目录」，重新加载当前路径的文件列表
       ["<C-r>"] = "actions.refresh",
+
+      -- 绑定 <leader>y 为「复制当前条目名」，将选中的文件/目录名复制到寄存器
       ["<leader>y"] = "actions.yank_entry",
+
+      -- 禁用默认的 g. 快捷键
+      -- Oil 默认 g. 是切换显示/隐藏隐藏文件，这里禁用，改用下面的 zh 实现相同功能
       ["g."] = false,
+
+      -- 绑定 zh 为「切换隐藏文件显示」，替代默认的 g.
+      -- 采用 z 前缀更符合 Vim 原生折叠/显示类操作的肌肉记忆
       ["zh"] = "actions.toggle_hidden",
+
+      -- 绑定反斜杠 \ 键：选中文件后，以「水平分屏（左右）」方式打开
+      -- actions.select 是打开文件的内置动作，horizontal = true 指定分屏方向
       ["\\"] = { "actions.select", opts = { horizontal = true } },
+
+      -- 绑定竖线 | 键（Shift+\）：选中文件后，以「垂直分屏（上下）」方式打开
       ["|"] = { "actions.select", opts = { vertical = true } },
+
+      -- 绑定 - 键为「关闭 Oil 窗口」
+      -- 注意：Oil 默认 - 是返回上一级目录，这里被用户改成了关闭窗口的功能
       ["-"] = "actions.close",
+
+      -- 绑定 <leader>e 为「关闭 Oil 窗口」，和 - 功能重复，提供两种操作方式
       ["<leader>e"] = "actions.close",
+
+      -- 绑定退格键 Backspace 为「返回上一级父目录」，符合主流文件浏览器操作直觉
       ["<BS>"] = "actions.parent",
+
+      -- 自定义 gd 快捷键：切换文件详情列的显示模式
       ["gd"] = {
-        desc = "Toggle file detail view",
+        desc = "Toggle file detail view", -- 快捷键描述，会自动显示在 which-key 中
         callback = function()
-          detail = not detail
+          detail = not detail -- 切换详情开关状态
           if detail then
+            -- 开启详情：显示 图标、权限、文件大小、修改时间 四列
             require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
           else
+            -- 关闭详情：只显示图标一列，极简视图
             require("oil").set_columns({ "icon" })
           end
         end,
       },
+
+      -- 🔹 返回 Oil 项目根目录（替代默认的 ~ 键，符合 g 前缀导航习惯）
+      ["gr"] = function()
+        vim.cmd("OilRoot")
+      end,
+
+      -- 🔹 跳转到 Neovim 当前工作目录（cwd）
+      ["gc"] = "actions.open_cwd",
+
+      -- 可选：一键跳转到系统根目录 /（自定义回调）
+      ["g/"] = function()
+        require("oil").open("/")
+      end,
+
       ["q"] = "actions.close", -- 按 q 直接关闭 Oil 窗口
     },
 

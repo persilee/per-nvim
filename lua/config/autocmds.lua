@@ -75,9 +75,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       "LuaLineReplace",
       "LuaLineCommand",
       "LuaLineTerminal",
-
-      -- 其他
-      "NotifyBackground",
     }
     for _, group in ipairs(transparent_groups) do
       vim.api.nvim_set_hl(0, group, { bg = "NONE" })

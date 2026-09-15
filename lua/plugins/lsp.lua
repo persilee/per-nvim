@@ -1,7 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       -- "hrsh7th/cmp-nvim-lsp",
       "glepnir/lspsaga.nvim",
@@ -90,21 +90,47 @@ return {
 
       vim.lsp.config["pyright"] = {
         cmd = { "pyright-langserver", "--stdio" },
-        root_markers = { "pyproject.toml", "setup.py", "requirements.txt", ".git" },
+        filetypes = { "python" },
+        root_markers = { "pyproject.toml", "setup.py", "requirements.txt", ".git", "." },
         capabilities = capabilities,
         on_attach = on_attach,
-        -- settings = {
-        --   python = {
-        --     pythonPath = "/home/zzf/miniconda3/envs/dl-env/bin/python",
-        --     analysis = {
-        --       typeCheckingMode = "basic",
-        --       autoSearchPaths = true,
-        --       diagnosticMode = "workspace",
-        --       useLibraryCodeForTypes = true,
-        --       reportAttributeAccessIssue = "none",
-        --     },
-        --   },
-        -- },
+        settings = {
+          python = {
+            -- pythonPath = "/home/zzf/miniconda3/envs/dl-env/bin/python",
+            analysis = {
+              typeCheckingMode = "basic",
+              autoSearchPaths = true,
+              diagnosticMode = "workspace",
+              useLibraryCodeForTypes = true,
+              reportAttributeAccessIssue = "none",
+            },
+          },
+        },
+
+        -- LSP 启动前动态检测项目虚拟环境，自动设置 pythonPath
+        on_new_config = function(config, root_dir)
+          -- 按优先级查找常见的虚拟环境目录名
+          local venv_dirs = { ".venv", "venv", "env" }
+          local target_python = nil
+
+          -- 遍历所有可能的虚拟环境路径
+          for _, dir_name in ipairs(venv_dirs) do
+            -- macOS/Linux 虚拟环境解释器路径：项目根/venv名/bin/python
+            local python_path = root_dir .. "/" .. dir_name .. "/bin/python"
+            -- 检查该路径是否为可执行文件
+            if vim.fn.executable(python_path) == 1 then
+              target_python = python_path
+              break
+            end
+          end
+
+          -- 找到虚拟环境就用它；找不到就兜底用系统全局 python3
+          if target_python then
+            config.settings.python.pythonPath = target_python
+          else
+            config.settings.python.pythonPath = vim.fn.exepath("python3") or vim.fn.exepath("python")
+          end
+        end,
       }
       vim.lsp.enable("pyright")
 
@@ -204,6 +230,38 @@ return {
         },
         use_diagnostic_signs = true,
       })
+
+      -- =================== JSON ===================
+      vim.lsp.config["jsonls"] = {
+        cmd = { "vscode-json-language-server", "--stdio" },
+        -- 同时支持标准 JSON 和带注释的 JSONC 格式
+        filetypes = { "json", "jsonc" },
+        root_markers = { ".git", "package.json", "tsconfig.json", "." },
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          json = {
+            validate = { enable = true }, -- 开启语法校验
+            format = { enable = true }, -- 开启格式化能力
+            -- 内置常用 JSON Schema，自动补全对应文件的字段
+            schemas = {
+              {
+                fileMatch = { "package.json" },
+                url = "https://json.schemastore.org/package.json",
+              },
+              {
+                fileMatch = { "tsconfig.json", "tsconfig.*.json" },
+                url = "https://json.schemastore.org/tsconfig.json",
+              },
+              {
+                fileMatch = { ".eslintrc.json" },
+                url = "https://json.schemastore.org/eslintrc.json",
+              },
+            },
+          },
+        },
+      }
+      vim.lsp.enable("jsonls")
     end,
   },
 }

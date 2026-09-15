@@ -1,8 +1,8 @@
 -- plugins/theme.lua
 
 -- 定义你想用的主题名字
--- 可选: "tokyonight" 或 "catppuccin"
-local active_theme = "nvimpire"
+-- 可选: "tokyonight" 或 "catppuccin" 或 "nvimpire" 或 "gradient_dracula"
+local active_theme = "gradient_dracula"
 
 -- 定义主题配置表
 local themes = {
@@ -44,12 +44,35 @@ local themes = {
     },
   },
 
+  -- Gradient Dracula
+  gradient_dracula = {
+    "persilee/nvim-gradient-dracula",
+    name = "gradient_dracula",
+    config = function()
+      require("nvimpire").setup({
+        style = "dracula", -- dracula
+        terminal_colors = true,
+        italic_comment = true,
+        bold = true, -- 渐变词加粗
+        cursor_color = false, -- 是否打开光标变色，false 即关闭
+        flow = { enabled = true },
+        transparent_bg = true,
+      })
+      vim.cmd("colorscheme nvimpire")
+      -- 主题加载后覆盖注释颜色
+      vim.api.nvim_set_hl(0, "Comment", {
+        fg = "#b2bbc2",
+        italic = true,
+      })
+    end,
+  },
+
   --nvimpire
   nvimpire = {
     "colevoss/nvimpire",
     config = function()
       require("nvimpire").setup({
-        transparent = false,
+        transparent = true,
       })
       vim.cmd("colorscheme nvimpire")
       -- 主题加载后覆盖注释颜色
@@ -60,8 +83,8 @@ local themes = {
 
       -- ===== 新增：光标所在行高亮 =====
       -- vim.api.nvim_set_hl(0, "CursorLine", {
-      --   bg = "#ffffff",  -- 背景色，和你之前的 lualine 同色系
-      --   blend = 60,      -- 透明度 0-100：数值越小越实，越大越透
+      --   bg = "#ffffff", -- 背景色，和你之前的 lualine 同色系
+      --   blend = 60, -- 透明度 0-100：数值越小越实，越大越透
       -- })
     end,
   },

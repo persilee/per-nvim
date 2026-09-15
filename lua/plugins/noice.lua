@@ -7,6 +7,13 @@ return {
     "MunifTanjim/nui.nvim", -- 必须
     "rcarriga/nvim-notify",
   },
+  init = function()
+    require("notify").setup({
+      background_colour = "#1e1e2e",
+    })
+    -- 匹配 Catppuccin Mocha 背景色，其他口味替换对应色值即可
+    vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#1e1e2e" })
+  end,
   config = function()
     require("noice").setup({
       -- 命令行配置
@@ -55,6 +62,20 @@ return {
             find = "Config Change Detected", -- 匹配包含的提示
           },
           opts = { skip = true }, -- 直接跳过，不显示也不记入历史
+        },
+        -- 外部命令(:!)输出用弹窗显示，不自动消失
+        {
+          filter = {
+            event = "msg_show",
+            kind = "shell",
+          },
+          view = "popup",
+          opts = {
+            enter = true, -- 打开弹窗自动聚焦，方便滚动查看长输出
+            border = "single",
+            size = { width = 0.8, height = 0.6 },
+            position = "center",
+          },
         },
       },
 
