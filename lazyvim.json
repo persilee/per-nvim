@@ -1,7 +1,7 @@
 {
-  "extras": [
-
-  ],
+  "extras": {
+    "editor.ufo": true
+  },
   "install_version": 8,
   "news": {
     "NEWS.md": "11866"

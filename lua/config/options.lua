@@ -16,6 +16,10 @@ vim.opt.autoread = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = false
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = true
+vim.opt.foldlevelstart = 99 -- 打开文件默认全部展开，不自动折叠
 
 -- 禁止自动注释续行
 vim.opt.formatoptions:remove({ "c", "r", "o" })
@@ -53,11 +57,5 @@ vim.opt.iskeyword:append("-")
 
 -- 使得左右键可以跨行
 vim.o.whichwrap = vim.o.whichwrap .. "<>,h,l"
-
--- 禁止加载 netrw 核心
--- vim.g.loaded_netrw = 1
---
--- -- 禁止加载 netrw 的 plugin 层
--- vim.g.loaded_netrwPlugin = 1
 
 vim.o.winborder = "rounded"
