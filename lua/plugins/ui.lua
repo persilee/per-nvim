@@ -81,5 +81,21 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
+    config = function()
+      require("nvim-treesitter-textobjects").setup({
+        select = {
+          lookahead = true,
+          selection_modes = {
+            ["@function.outer"] = "V", -- 整个函数按行选择
+          },
+        },
+      })
+      vim.keymap.set({ "x", "o" }, "af", function()
+        require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "if", function()
+        require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+      end)
+    end,
   },
 }

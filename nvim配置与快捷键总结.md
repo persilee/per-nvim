@@ -6,7 +6,7 @@
 
 ## 一、配置总览
 
-这是一套基于 **lazy.nvim** 构建的独立定制配置（未启用 LazyVim 官方插件集，`LazyVim/LazyVim` 的 import 已在 `lazy.lua` 中注释），从零组合了文件管理、LSP、补全、界面美化等 20+ 个插件，整体风格为**透明背景 + Dracula/Gradient Dracula 配色**。
+这是一套基于 **lazy.nvim** 构建的独立定制配置（未启用 LazyVim 官方插件集，`LazyVim/LazyVim` 的 import 已在 `lazy.lua` 中注释），从零组合了文件管理、LSP、补全、界面美化等 30+ 个插件，整体风格为**透明背景 + Dracula/Gradient Dracula 配色**。
 
 ### 目录结构
 
@@ -82,6 +82,7 @@
 | **neo-tree.nvim** | 已配置但 `enabled = false` **禁用**（被 oil 替代） |
 | **aerial.nvim** | 代码大纲侧边栏（LSP + Treesitter 双后端），缩进引导线，`<leader>o` 切换 |
 | **hop.nvim** | 字符级精准跳转（详见快捷键） |
+| **flash.nvim** | 超快字符跳转：`s` 输入字符实时过滤候选并打标签，支持 Treesitter 节点（`S`）、跨窗口远程跳转（`r`）、命令行 Flash 搜索（`<C-s>`），可替代原生 f/t 与 Hop |
 | **nvim-spectre** | 全局搜索替换面板，基于 ripgrep（`rg`），支持高亮预览 |
 
 ### 3. 编辑增强
@@ -249,14 +250,21 @@
 | `<M-S-j>` / `<M-S-k>` | 向下 / 向上逐行添加光标（列编辑） |
 | `<leader>mt` | 切换扩展 / 光标模式 |
 
-### 12. 字符跳转（Hop）
+### 12. 字符跳转（Flash + Hop(已禁用)）
 
 | 快捷键 | 功能 |
 |---|---|
-| `<leader>js` | 双字符精准跳转 |
-| `<leader>jf` | 单字符全局跳转（跨行） |
-| `<leader>jF` | 当前行内反向单字符跳转 |
-| `<leader>jl` / `<leader>jw` / `<leader>jp` | 跳转到行 / 单词 / 正则匹配 |
+| `s` | Flash：字符跳转（输入字符实时过滤候选并打标签，按标签或回车跳转） |
+| `S` | Flash：Treesitter 节点跳转（按语法节点选择跳转目标） |
+| `r`（操作符待决） | Flash：远程跳转（在其它窗口执行 flash） |
+| `R`（操作符/可视） | Flash：Treesitter 搜索跳转 |
+| `<C-s>`（命令行） | Flash：切换命令行内 Flash 搜索 |
+| `<leader>js` | Hop：双字符精准跳转 |
+| `<leader>jf` | Hop：单字符全局跳转（跨行） |
+| `<leader>jF` | Hop：当前行内反向单字符跳转 |
+| `<leader>jl` / `<leader>jw` / `<leader>jp` | Hop：跳转到行 / 单词 / 正则匹配 |
+
+> 注：flash 的 `s` 会覆盖 Vim 原生 `s`（删除字符进入插入）。
 
 ### 13. 其它
 
@@ -267,6 +275,7 @@
 | `<leader>nh` / `<leader>nl` / `<leader>ne` | Noice 通知历史 / 最近一条 / 错误历史 |
 | `<leader>nd` / `<leader>np` | 清除通知 / 搜索历史消息 |
 | `<leader>cc` | 光标一键切换为粉色方块 |
+| `vaf` / `vif` | 选择整个函数（包含签名） / 选择函数内部 |
 
 ---
 
@@ -408,3 +417,4 @@
 4. **C/C++**：折叠使用 syntax 模式，Python/Lua 等使用 Treesitter 折叠（默认全部展开）。
 5. **Git 仓库**：状态栏会显示分支与增删改计数，行号旁有 gitsigns 标记。
 6. **浮窗终端模块**（`lua/customs/float_trem.lua`）已预留但当前未绑定快捷键，实际终端功能由 Snacks 提供。
+7. **flash 高亮颜色**：flash 的候选/标签高亮链接到内置 `Search`/`IncSearch`/`Substitute` 组，颜色随主题而定；当前 Gradient Dracula 主题将其定义为白底反色（flash 官方演示为红色系），如需红色系可在 `lua/plugins/flash.lua` 中覆盖 `FlashMatch`/`FlashCurrent`/`FlashLabel` 高亮组。

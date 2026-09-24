@@ -58,6 +58,7 @@ return {
     "smoka7/hop.nvim",
     version = "*", -- 锁定稳定版
     event = "VeryLazy",
+    enabled = false,
     config = function()
       require("hop").setup({
         -- 提示标签的字符顺序（按键盘指法优先排列）
