@@ -19,6 +19,11 @@ return {
         css = { "prettier" }, -- 添加 CSS 格式化工具
         tex = { "tex-fmt" },
       },
+      formatters = {
+        prettier = {
+          prepend_args = { "--trailing-comma", "none" },
+        },
+      },
       format_on_save = {
         timeout_ms = 500,
         lsp_fallback = false,

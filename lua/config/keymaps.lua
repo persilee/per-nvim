@@ -30,11 +30,19 @@ map("n", "<leader><Left>", "<C-w>h", opts) -- 移动到左边窗口
 map("n", "<leader><Down>", "<C-w>j", opts) -- 移动到下边窗口
 map("n", "<leader><Up>", "<C-w>k", opts) -- 移动到上边窗口
 map("n", "<leader><Right>", "<C-w>l", opts) -- 移动到右边窗口
+map("n", "<leader>h", "<C-w>h", opts) -- 移动到左边窗口
+map("n", "<leader>j", "<C-w>j", opts) -- 移动到下边窗口
+map("n", "<leader>k", "<C-w>k", opts) -- 移动到上边窗口
+map("n", "<leader>l", "<C-w>l", opts) -- 移动到右边窗口
 
 -- 文件操作
-map("n", "<leader>w", ":w<CR>", opts) -- 保存
-map("n", "<leader>q", ":q<CR>", opts) -- 关闭
-map("n", "<leader>Q", ":wq<CR>", opts) -- 关闭
+map({ "n", "v" }, "<C-S-A-w>", ":w<CR>", opts) -- 保存
+map({ "n", "v" }, "<C-S-A-s>", ":wall<CR>", opts) -- 保存全部文件
+map({ "n", "v" }, "<C-S-A-q>", ":q<CR>", opts) -- 关闭
+map({ "n", "v" }, "<C-S-A-x>", ":wq<CR>", opts) -- 保存并关闭
+map({ "n", "v" }, "<leader>q", ":q<CR>", opts)
+map({ "n", "v" }, "<leader>w", ":w<CR>", opts)
+map({ "n", "v" }, "<leader>Q", ":wq<CR>", opts)
 
 -- 行移动
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
@@ -91,8 +99,14 @@ vim.keymap.set("n", "<leader>tb", function()
   end
 end, { desc = "Toggle Bufferline" })
 
--- 普通模式下全选
-map("n", "<C-a>", "gg0vG$", opts)
+-- 普通模式、可视模式：Ctrl+A 全选全文
+vim.keymap.set({ "n", "v" }, "<C-S-A-a>", "ggVG", { desc = "全选所有内容" })
+
+-- 插入模式：Ctrl+A 退出插入模式并全选
+vim.keymap.set("i", "<C-S-A-a>", "<Esc>ggVG", { desc = "全选所有内容" })
+
+-- 可视模式下 p 粘贴不覆盖无名寄存器
+vim.keymap.set("v", "p", "P", { noremap = true, silent = true })
 
 -- 删除当前单词
 map("n", "dw", "diw", opts)

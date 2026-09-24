@@ -160,3 +160,11 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.foldmethod = "syntax"
   end,
 })
+
+-- 保存文件时自动创建不存在的父目录
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    vim.fn.mkdir(vim.fn.expand("<afile>:p:h"), "p")
+  end,
+})

@@ -67,27 +67,6 @@ return {
       }
       vim.lsp.enable("cmake")
 
-      -- =================== Python ===================
-      -- vim.lsp.config["pyright"] = {
-      --   cmd = { "pyright-langserver", "--stdio" },
-      --   root_markers = { "pyproject.toml", "setup.py", "requirements.txt", ".git" },
-      --   capabilities = capabilities,
-      --   on_attach = on_attach,
-      --   settings = {
-      --     python = {
-      --       pythonPath = "./venv/bin/python", -- ⭐ 关键
-      --       analysis = {
-      --         typeCheckingMode = "basic",
-      --         autoSearchPaths = true,
-      --         diagnosticMode = "workspace",
-      --         useLibraryCodeForTypes = true,
-      --         reportAttributeAccessIssue = "none", -- ⭐ 解决 tf.keras
-      --       },
-      --     },
-      --   },
-      -- }
-      -- vim.lsp.enable("pyright")
-
       vim.lsp.config["pyright"] = {
         cmd = { "pyright-langserver", "--stdio" },
         filetypes = { "python" },
@@ -144,7 +123,7 @@ return {
         settings = {
           Lua = {
             runtime = { version = "LuaJIT" },
-            diagnostics = { globals = { "vim" } },
+            diagnostics = { globals = { "vim", "hs" } },
             workspace = {
               library = {
                 vim.fn.stdpath("config"),

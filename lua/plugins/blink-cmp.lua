@@ -49,7 +49,7 @@ return {
       ["<Down>"] = { "select_next", "fallback" },
       ["<CR>"] = { "accept", "fallback" },
       ["<Esc>"] = { "hide", "fallback" },
-      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+      ["<C-d>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
     },
 

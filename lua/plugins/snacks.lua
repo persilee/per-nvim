@@ -29,6 +29,12 @@ return {
     -- 替代telescope
     picker = {
       enabled = true,
+      icons = {
+        -- 开启持久化缓存，自动存到 Neovim 标准缓存目录
+        cache = true,
+        -- 只加载指定图标集，减少体积加快速度
+        -- sources = { "nerd" }
+      },
       win = {
         input = {
           keys = {
@@ -147,7 +153,27 @@ return {
       end,
       desc = "Search History",
     },
-
+    {
+      "<leader>fh",
+      function()
+        Snacks.picker.help({ layout = "ivy_splitp" })
+      end,
+      desc = "查找帮助文档",
+    },
+    {
+      "<leader>fl",
+      function()
+        Snacks.picker.picker_layouts()
+      end,
+      desc = "查找 picker 的所有布局",
+    },
+    {
+      "<leader>fk",
+      function()
+        Snacks.picker.keymaps({ layout = "ivy_splitp" })
+      end,
+      desc = "查找快捷键",
+    },
     {
       "<leader>sd",
       function()
@@ -206,7 +232,6 @@ return {
       end,
       desc = "Git Diff (Hunks)",
     },
-
     {
       "gai",
       function()

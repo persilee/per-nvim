@@ -60,10 +60,10 @@ local themes = {
       })
       vim.cmd("colorscheme nvimpire")
       -- 主题加载后覆盖注释颜色
-      vim.api.nvim_set_hl(0, "Comment", {
-        fg = "#b2bbc2",
-        italic = true,
-      })
+      -- vim.api.nvim_set_hl(0, "Comment", {
+      --   fg = "#b2bbc2",
+      --   italic = true,
+      -- })
     end,
   },
 

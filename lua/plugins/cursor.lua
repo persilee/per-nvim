@@ -64,9 +64,10 @@ return {
 
       -- ========== 可选优化 ==========
       -- 关闭跨缓冲区动画，减少不必要的大幅跳动
-      smear_between_buffers = false,
+      smear_between_buffers = true,
       -- 关闭命令行的 smear，避免命令行光标异常
-      smear_to_cmd = false,
+      smear_to_cmd = true,
+      smear_insert_mode = true,
     },
   },
 }

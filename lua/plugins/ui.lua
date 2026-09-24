@@ -69,7 +69,9 @@ return {
     build = ":TSUpdate", -- lazy.nvim 里用 build，不是 run
     opts = {
       ensure_installed = { "c", "cpp", "lua", "python", "cmake" }, -- 必装语言
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+      },
       indent = { enable = true },
       incremental_selection = { enable = true },
       folds = { enable = true },

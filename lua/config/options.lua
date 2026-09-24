@@ -20,6 +20,8 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 99 -- 打开文件默认全部展开，不自动折叠
+-- 全局关闭长行自动折行显示
+vim.opt.wrap = false
 
 -- 禁止自动注释续行
 vim.opt.formatoptions:remove({ "c", "r", "o" })
