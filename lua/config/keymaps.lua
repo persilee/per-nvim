@@ -63,8 +63,8 @@ map("v", "<C-c>", [["+y]], opts)
 map("n", "<C-c>", [["+yy]], opts)
 
 -- 黏贴到当前光标位置
-map("n", "<C-v>", [["+p]], opts)
-map("v", "<C-v>", [["+p]], opts)
+-- map("n", "<C-v>", [["+p]], opts)
+-- map("v", "<C-v>", [["+p]], opts)
 map("n", "p", [["+p]], opts)
 map("v", "p", [["+p]], opts)
 

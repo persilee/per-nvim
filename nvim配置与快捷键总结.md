@@ -92,7 +92,7 @@
 | **nvim-autopairs**              | 自动补全括号/引号，Treesitter 感知，同行避免重复括号                                                                                                                                                |
 | **nvim-surround**               | 环绕符号操作：`ysiw"` 加引号、`ds"` 删除、`cs"'` 替换                                                                                                                                               |
 | **Comment.nvim**                | 一键注释：`gcc` 行注释、`gbc` 块注释、`gc`/`gb` 操作符                                                                                                                                              |
-| **vim-visual-multi**            | 多光标编辑（详见快捷键）                                                                                                                                                                            |
+| **multicursor.nvim**            | 多光标编辑：Ctrl+鼠标点击加光标、上下行加光标、按词匹配加光标，支持同时输入（详见快捷键）                                                                                                          |
 | **smear-cursor.nvim**           | 光标移动丝滑动画（阻尼/帧率调优，兼容 0.11 命令模式抖动）                                                                                                                                           |
 | **neoscroll.nvim**              | `<C-u>`/`<C-d>` 平滑滚动（quadratic 缓动）                                                                                                                                                          |
 | **conform.nvim**                | 保存时自动格式化：Lua(stylua) / Python(black) / JS·TS·HTML·CSS·JSONC(prettier) / JSON(jq) / Shell(shfmt) / C·C++(clang-format) / TeX(tex-fmt) / Markdown(prettierd+cbfmt) / TOML(taplo)，500ms 超时 |
@@ -251,16 +251,20 @@
 | `q`（终端内）               | 隐藏终端                              |
 | `<C-l>`（终端内）           | 清屏                                  |
 
-### 11. 多光标（vim-visual-multi）
+### 11. 多光标（multicursor.nvim）
 
-| 快捷键                      | 功能                              |
-| --------------------------- | --------------------------------- |
-| `<leader>mn` / `<leader>mp` | 选中下一个 / 上一个匹配项         |
-| `<leader>ma`                | 全选所有匹配项                    |
-| `<leader>ms` / `<leader>mr` | 跳过 / 移除当前光标               |
-| `<leader>mq`                | 退出多光标模式                    |
-| `<M-S-j>` / `<M-S-k>`       | 向下 / 向上逐行添加光标（列编辑） |
-| `<leader>mt`                | 切换扩展 / 光标模式               |
+| 快捷键                          | 功能                                  |
+| ------------------------------- | ------------------------------------- |
+| `<Ctrl+鼠标左键>`               | 在点击位置添加光标（可拖拽框选多处）  |
+| `<Up>` / `<Down>`               | 在主光标 上一行 / 下一行 加光标       |
+| `<leader><Up>` / `<leader><Down>` | 向上 / 向下跳过一行（不加光标）     |
+| `<leader>n` / `<leader>N`      | 下一个 / 上一个相同单词处加光标       |
+| `<leader>s` / `<leader>S`      | 跳过下一个 / 上一个相同单词           |
+| `<C-q>`                         | 临时禁用 / 恢复所有光标               |
+| **多光标模式下**                |                                       |
+| `<Left>` / `<Right>`            | 切换哪个是主光标                      |
+| `<leader>x`                     | 删除主光标                            |
+| `<Esc>`                         | 清除所有光标退出多光标模式            |
 
 ### 12. 字符跳转（Flash + Hop(已禁用)）
 

@@ -1,35 +1,78 @@
 return {
   {
-    "mg979/vim-visual-multi",
-    branch = "master",
-    keys = {
-      -- 核心匹配操作
-      { "<leader>mn", mode = { "n", "x" }, "<Plug>(VM-Find-Under)", desc = "多光标：选中下一个匹配项" },
-      { "<leader>mp", mode = { "n", "x" }, "<Plug>(VM-Find-Prev)", desc = "多光标：选中上一个匹配项" },
-      {
-        "<leader>ma",
-        mode = { "n", "x" },
-        "<Plug>(VM-Find-Under)<Plug>(VM-Select-All)",
-        desc = "多光标：全选所有匹配项",
-      },
+    "jake-stewart/multicursor.nvim",
+    branch = "1.0",
+    config = function()
+      local mc = require("multicursor-nvim")
+      mc.setup()
 
-      -- 光标管理
-      { "<leader>ms", mode = "n", "<Plug>(VM-Skip-Region)", desc = "多光标：跳过当前匹配项" },
-      { "<leader>mr", mode = "n", "<Plug>(VM-Remove-Region)", desc = "多光标：移除当前光标" },
-      { "<leader>mq", mode = "n", "<Plug>(VM-Exit)", desc = "多光标：退出多光标模式" },
+      local set = vim.keymap.set
 
-      -- 垂直逐行添加光标（列编辑场景）
-      { "<M-S-j>", mode = "n", "<Plug>(VM-Add-Cursor-Down)", desc = "多光标：向下添加一行光标" },
-      { "<M-S-k>", mode = "n", "<Plug>(VM-Add-Cursor-Up)", desc = "多光标：向上添加一行光标" },
+      -- Add or skip cursor above/below the main cursor.
+      set({ "n", "x" }, "<up>", function()
+        mc.lineAddCursor(-1)
+      end)
+      set({ "n", "x" }, "<down>", function()
+        mc.lineAddCursor(1)
+      end)
+      set({ "n", "x" }, "<leader><up>", function()
+        mc.lineSkipCursor(-1)
+      end)
+      set({ "n", "x" }, "<leader><down>", function()
+        mc.lineSkipCursor(1)
+      end)
 
-      -- 模式切换
-      { "<leader>mt", mode = "n", "<Plug>(VM-Toggle-Mode)", desc = "多光标：切换扩展/光标模式" },
-    },
-    init = function()
-      -- 关闭默认映射，自定义快捷键
-      vim.g.VM_default_mappings = 0
-      -- 适配 Catppuccin 风格的配色主题
-      vim.g.VM_theme = "dracula"
+      -- Add or skip adding a new cursor by matching word/selection
+      set({ "n", "x" }, "<leader>n", function()
+        mc.matchAddCursor(1)
+      end)
+      set({ "n", "x" }, "<leader>s", function()
+        mc.matchSkipCursor(1)
+      end)
+      set({ "n", "x" }, "<leader>N", function()
+        mc.matchAddCursor(-1)
+      end)
+      set({ "n", "x" }, "<leader>S", function()
+        mc.matchSkipCursor(-1)
+      end)
+
+      -- Add and remove cursors with control + left click.
+      set("n", "<c-leftmouse>", mc.handleMouse)
+      set("n", "<c-leftdrag>", mc.handleMouseDrag)
+      set("n", "<c-leftrelease>", mc.handleMouseRelease)
+
+      -- Disable and enable cursors.
+      set({ "n", "x" }, "<c-q>", mc.toggleCursor)
+
+      -- Mappings defined in a keymap layer only apply when there are
+      -- multiple cursors. This lets you have overlapping mappings.
+      mc.addKeymapLayer(function(layerSet)
+        -- Select a different cursor as the main one.
+        layerSet({ "n", "x" }, "<left>", mc.prevCursor)
+        layerSet({ "n", "x" }, "<right>", mc.nextCursor)
+
+        -- Delete the main cursor.
+        layerSet({ "n", "x" }, "<leader>x", mc.deleteCursor)
+
+        -- Enable and clear cursors using escape.
+        layerSet("n", "<esc>", function()
+          if not mc.cursorsEnabled() then
+            mc.enableCursors()
+          else
+            mc.clearCursors()
+          end
+        end)
+      end)
+
+      -- Customize how cursors look.
+      local hl = vim.api.nvim_set_hl
+      hl(0, "MultiCursorCursor", { reverse = true })
+      hl(0, "MultiCursorVisual", { link = "Visual" })
+      hl(0, "MultiCursorSign", { link = "SignColumn" })
+      hl(0, "MultiCursorMatchPreview", { link = "Search" })
+      hl(0, "MultiCursorDisabledCursor", { reverse = true })
+      hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+      hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
     end,
   },
   {
