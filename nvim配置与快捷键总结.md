@@ -116,7 +116,7 @@
 | **bufferline.nvim** | 标签页栏：序号显示、过滤空 buffer、自定义关闭逻辑（最后一个 buffer 用 `enew`）、图标、LSP 诊断点、完全透明 |
 | **noice.nvim** | 命令行/消息 UI 美化：命令行浮窗、消息走 notify、错误弹窗、外部命令输出弹窗、搜索历史 |
 | **nvim-notify** | 通知中心（Noice 后端，背景 #1e1e2e） |
-| **snacks.nvim** | 全家桶：缩进引导线 + 当前作用域高亮、**Picker 查找器**（替代 Telescope）、底部/浮动终端、Dashboard 启动页、输入增强 |
+| **snacks.nvim** | 全家桶：缩进引导线 + 当前作用域高亮、**Picker 查找器**（替代 Telescope）、底部/浮动终端、输入增强；**图片预览**（文档浮窗显示，最大 50×50）；**自定义 Dashboard 启动页**（ASCII 头部 + 快捷键） |
 | **mini.icons** | 文件/文件类型图标，并 mock 了 `nvim-web-devicons` 接口（其他插件自动兼容） |
 | **lualine.nvim** | 已配置但 `enabled = false` **禁用**（被 heirline 替代） |
 
@@ -226,7 +226,10 @@
 | `<leader>fh` / `<leader>fk` | 查找帮助 / 查找快捷键 |
 | `<leader>fl` / `<leader>:` / `<leader>/` | Picker 布局 / 命令历史 / 搜索历史 |
 | `<leader>sd` | 诊断列表 |
+| `<leader>fn` | 通知记录查找（Picker） |
 | `<leader>gs` / `<leader>gd` | Git 状态 / Git Diff |
+
+**启动页 Dashboard 快捷键**：`f` 智能查找 · `h` 搜索历史 · `o` 最近文件 · `e` 新建文件 · `L` Lazy 插件管理 · `P` Lazy Profile · `M` Mason · `q` 退出
 
 ### 10. 终端
 
@@ -264,7 +267,7 @@
 | `<leader>jF` | Hop：当前行内反向单字符跳转 |
 | `<leader>jl` / `<leader>jw` / `<leader>jp` | Hop：跳转到行 / 单词 / 正则匹配 |
 
-> 注：flash 的 `s` 会覆盖 Vim 原生 `s`（删除字符进入插入）。
+> 注：flash 的 `s` 会覆盖 Vim 原生 `s`（删除字符进入插入）。Hop 已在 `misc.lua` 中 `enabled = false`，其键位当前不生效，保留仅作参考。
 
 ### 13. 其它
 
@@ -274,6 +277,7 @@
 | `<leader>sr` / `<leader>sw` / `<leader>sf` | Spectre 全局搜索替换 / 搜索当前词 / 文件内搜索 |
 | `<leader>nh` / `<leader>nl` / `<leader>ne` | Noice 通知历史 / 最近一条 / 错误历史 |
 | `<leader>nd` / `<leader>np` | 清除通知 / 搜索历史消息 |
+| `<leader>n` / `<leader>N` | Snacks 通知历史 / 隐藏通知 |
 | `<leader>cc` | 光标一键切换为粉色方块 |
 | `vaf` / `vif` | 选择整个函数（包含签名） / 选择函数内部 |
 
@@ -418,3 +422,5 @@
 5. **Git 仓库**：状态栏会显示分支与增删改计数，行号旁有 gitsigns 标记。
 6. **浮窗终端模块**（`lua/customs/float_trem.lua`）已预留但当前未绑定快捷键，实际终端功能由 Snacks 提供。
 7. **flash 高亮颜色**：flash 的候选/标签高亮链接到内置 `Search`/`IncSearch`/`Substitute` 组，颜色随主题而定；当前 Gradient Dracula 主题将其定义为白底反色（flash 官方演示为红色系），如需红色系可在 `lua/plugins/flash.lua` 中覆盖 `FlashMatch`/`FlashCurrent`/`FlashLabel` 高亮组。
+8. **Snacks 通知**：配置中 `notifier.enabled = false`（通知显示由 noice.nvim 接管），新增的 `<leader>n` / `<leader>fn` 依赖 Snacks notifier 记录历史，当前历史可能为空；如需使用需启用 snacks notifier。
+9. **Dashboard 键位**：`h` = 搜索历史（Find history，`Snacks.picker.search_history()`）、`o` = 最近文件（Recent files），已无重复，命令均已修正。

@@ -57,8 +57,50 @@ return {
       timeout = 2000,
     },
 
+    image = {
+      enabled = true,
+      doc = { enabled = true, inline = false, float = true, max_width = 50, max_height = 50 },
+    },
+    styles = {
+      snacks_image = {
+        border = "rounded",
+        backdrop = false,
+      },
+    },
+
     scope = { enabled = true },
-    dashboard = { enabled = true },
+    dashboard = {
+      enabled = true,
+      preset = {
+        keys = {
+          { icon = "󰈞 ", key = "f", desc = "Find files", action = ":lua Snacks.picker.smart()" },
+          { icon = " ", key = "h", desc = "Find history", action = ":lua Snacks.picker.search_history()" },
+          { icon = " ", key = "e", desc = "New file", action = ":enew" },
+          { icon = " ", key = "o", desc = "Recent files", action = ":lua Snacks.picker.recent()" },
+          { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+          {
+            icon = "󰔛 ",
+            key = "P",
+            desc = "Lazy Profile",
+            action = ":Lazy profile",
+            enabled = package.loaded.lazy ~= nil,
+          },
+          { icon = " ", key = "M", desc = "Mason", action = ":Mason", enabled = package.loaded.lazy ~= nil },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+        },
+        header = [[
+░  ░░░░░░░░  ░░░░  ░░░      ░░░  ░░░░░░░
+▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒▒▒▒
+▓  ▓▓▓▓▓▓▓▓        ▓▓  ▓▓▓▓▓▓▓▓       ▓▓
+█  ████████  ████  ██  ████  ██  ████  █
+█        ██  ████  ███      ███       ██
+]],
+      },
+      sections = {
+        { section = "header" },
+        { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
+      },
+    },
     input = { enabled = true },
     animate = {},
 
@@ -173,6 +215,28 @@ return {
         Snacks.picker.keymaps({ layout = "ivy_splitp" })
       end,
       desc = "查找快捷键",
+    },
+    {
+      "<leader>fn",
+      function()
+        Snacks.picker.notifications({ layout = "dropdown" })
+      end,
+      desc = "Find Notification",
+    },
+
+    {
+      "<leader>n",
+      function()
+        Snacks.notifier.show_history()
+      end,
+      desc = "Notification history",
+    },
+    {
+      "<leader>N",
+      function()
+        Snacks.notifier.hide()
+      end,
+      desc = "Notification history",
     },
     {
       "<leader>sd",
