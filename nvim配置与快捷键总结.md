@@ -99,6 +99,7 @@
 | **nvim-treesitter**             | 语法高亮、缩进、增量选择、折叠；已装 c/cpp/lua/python/cmake                                                                                                                                         |
 | **nvim-treesitter-textobjects** | 基于语法树的对象选择                                                                                                                                                                                |
 | **nvim-colorizer.lua**          | 颜色值（#hex 等）实时着色显示                                                                                                                                                                       |
+| **todo-comments.nvim**          | 高亮并跳转 TODO/FIXME/HACK/NOTE 等注释，行号列显示彩色图标；`]t`/`[t` 跳转，`:TodoQuickFix` 列出全部 TODO                                                                                       |
 
 ### 4. Git 集成
 
@@ -289,6 +290,9 @@
 | `<leader>cc`                               | 光标一键切换为粉色方块                                    |
 | `<leader>p`                                | 粘贴系统剪贴板图片（markdown/tex/typst 自动插入对应模板） |
 | `vaf` / `vif`                              | 选择整个函数（包含签名） / 选择函数内部                   |
+| `]t` / `[t`                                | 下一个 / 上一个 TODO/FIXME/HACK 注释                      |
+| `:TodoQuickFix`                            | 把所有 TODO 列到 QuickFix 列表                           |
+| `:TodoLocList`                             | 把所有 TODO 列到位置列表                                  |
 
 ---
 
