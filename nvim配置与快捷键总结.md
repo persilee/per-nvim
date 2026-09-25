@@ -1,6 +1,6 @@
 # Neovim 配置功能与快捷键总结
 
-> 配置目录：`~/.config/nvim` · 包管理器：lazy.nvim · 生成时间：2026-09-24
+> 配置目录：`~/.config/nvim` · 包管理器：lazy.nvim
 
 ---
 
