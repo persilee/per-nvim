@@ -18,6 +18,8 @@ return {
         html = { "prettier" }, -- 添加 HTML 格式化工具
         css = { "prettier" }, -- 添加 CSS 格式化工具
         tex = { "tex-fmt" },
+        markdown = { "prettierd", "cbfmt" },
+        toml = { "taplo" },
       },
       formatters = {
         prettier = {

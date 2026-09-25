@@ -135,4 +135,23 @@ return {
       winbar = "%!v:lua.get_oil_winbar()",
     },
   },
+
+  config = function(_, opts)
+    require("oil").setup(opts)
+
+    -- 预览分屏时固定 oil 目录树宽度（oil 预览默认 50/50 分屏，这里改成窄栏）
+    vim.api.nvim_create_autocmd("WinNew", {
+      callback = function()
+        vim.defer_fn(function()
+          for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == "oil" then
+              vim.api.nvim_win_set_width(win, 36) -- oil 目录树固定 30 列
+              vim.wo[win].winfixwidth = true -- 锁定宽度，不被均分
+            end
+          end
+        end, 10)
+      end,
+    })
+  end,
 }

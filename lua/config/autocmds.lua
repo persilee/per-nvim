@@ -79,6 +79,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       -- 其他
       "Folded",
       "FoldColumn",
+      -- mason.nvim 窗口背景
+      "MasonNormal",
+      "MasonHeader",
+      "MasonMutedBlock",
     }
     for _, group in ipairs(transparent_groups) do
       vim.api.nvim_set_hl(0, group, { bg = "NONE" })
@@ -167,4 +171,38 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
     vim.fn.mkdir(vim.fn.expand("<afile>:p:h"), "p")
   end,
+})
+
+-- ===== render-markdown 透明化 =====
+-- 去掉标题 / 代码块 / 行内代码(`...`) 的深色背景，适配透明 WezTerm
+-- 只清背景：标题彩色前景(H1~H6)、代码语法高亮保留
+local function clear_markdown_bg()
+  local groups = {
+    "RenderMarkdownCode", -- 代码块背景
+    "RenderMarkdownCodeInline", -- 行内代码 `...` 背景
+    "RenderMarkdownCodeFallback",
+    "RenderMarkdownCodeBorder",
+    "RenderMarkdownH1Bg",
+    "RenderMarkdownH2Bg",
+    "RenderMarkdownH3Bg",
+    "RenderMarkdownH4Bg",
+    "RenderMarkdownH5Bg",
+    "RenderMarkdownH6Bg",
+  }
+  for _, g in ipairs(groups) do
+    vim.api.nvim_set_hl(0, g, { bg = "NONE" })
+  end
+end
+
+-- 启动后延迟执行：此时 render-markdown 可能还没加载，提前把组设成 bg=NONE，
+-- 插件自己用 default=true 建链接时就不会覆盖已有定义。
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.defer_fn(clear_markdown_bg, 300)
+  end,
+})
+
+-- 切换主题后重新应用
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = clear_markdown_bg,
 })

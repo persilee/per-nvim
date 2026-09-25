@@ -59,11 +59,12 @@ return {
 
     image = {
       enabled = true,
+      -- WezTerm 不支持 inline（snacks 硬编码 placeholders=false），只能用 float 浮窗模式
       doc = { enabled = true, inline = false, float = true, max_width = 50, max_height = 50 },
     },
     styles = {
       snacks_image = {
-        border = "rounded",
+        border = "none", -- 不显示浮窗边框，避免图片像素与边框行列换算错位
         backdrop = false,
       },
     },

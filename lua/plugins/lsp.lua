@@ -241,6 +241,8 @@ return {
         },
       }
       vim.lsp.enable("jsonls")
+      -- ==================== Markdown =================
+      vim.lsp.enable("marksman")
     end,
   },
 }
