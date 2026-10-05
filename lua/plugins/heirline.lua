@@ -167,7 +167,7 @@ return {
         condition = function()
           return vim.b.saved == true
         end,
-        provider = " ✓ Saved ",
+        provider = "  saved ",
         hl = { fg = catppuccin_mocha.green, bold = true },
         -- 明确指定触发更新的事件
         update = { "BufWritePost", "BufEnter" },
@@ -262,7 +262,7 @@ return {
           -- 空间极小：自动隐藏
           provider = "",
         },
-        update = { "DirChanged" },
+        update = { "DirChanged", "WinResized", "VimResized" },
       }
 
       -- ========== 7. 左右填充对齐 ==========

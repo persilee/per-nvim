@@ -169,6 +169,11 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function()
+    local path = vim.fn.expand("<afile>:p")
+    -- 跳过 oil:// 等协议路径（如 oil 目录 buffer），避免误建假目录
+    if path:match("^%a+://") then
+      return
+    end
     vim.fn.mkdir(vim.fn.expand("<afile>:p:h"), "p")
   end,
 })

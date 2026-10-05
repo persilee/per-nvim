@@ -9,6 +9,7 @@ vim.opt.tabstop = 2
 vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
+vim.opt.undofile = true -- 撤销历史持久化到磁盘（~/.local/state/nvim/undo），重启后仍可 u 撤销
 vim.opt.mouse = "a"
 vim.opt.laststatus = 3
 vim.opt.clipboard = "unnamedplus"

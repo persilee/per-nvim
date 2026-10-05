@@ -55,7 +55,7 @@ local themes = {
         italic_comment = true,
         bold = true, -- 渐变词加粗
         cursor_color = false, -- 是否打开光标变色，false 即关闭
-        flow = { enabled = true },
+        flow = { enabled = true, operator_static = true },
         transparent_bg = true,
       })
       vim.cmd("colorscheme nvimpire")

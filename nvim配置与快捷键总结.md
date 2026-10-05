@@ -92,14 +92,14 @@
 | **nvim-autopairs**              | 自动补全括号/引号，Treesitter 感知，同行避免重复括号                                                                                                                                                |
 | **nvim-surround**               | 环绕符号操作：`ysiw"` 加引号、`ds"` 删除、`cs"'` 替换                                                                                                                                               |
 | **Comment.nvim**                | 一键注释：`gcc` 行注释、`gbc` 块注释、`gc`/`gb` 操作符                                                                                                                                              |
-| **multicursor.nvim**            | 多光标编辑：Ctrl+鼠标点击加光标、上下行加光标、按词匹配加光标，支持同时输入（详见快捷键）                                                                                                          |
+| **multicursor.nvim**            | 多光标编辑：Ctrl+鼠标点击加光标、上下行加光标、按词匹配加光标，支持同时输入（详见快捷键）                                                                                                           |
 | **smear-cursor.nvim**           | 光标移动丝滑动画（阻尼/帧率调优，兼容 0.11 命令模式抖动）                                                                                                                                           |
 | **neoscroll.nvim**              | `<C-u>`/`<C-d>` 平滑滚动（quadratic 缓动）                                                                                                                                                          |
 | **conform.nvim**                | 保存时自动格式化：Lua(stylua) / Python(black) / JS·TS·HTML·CSS·JSONC(prettier) / JSON(jq) / Shell(shfmt) / C·C++(clang-format) / TeX(tex-fmt) / Markdown(prettierd+cbfmt) / TOML(taplo)，500ms 超时 |
 | **nvim-treesitter**             | 语法高亮、缩进、增量选择、折叠；已装 c/cpp/lua/python/cmake                                                                                                                                         |
 | **nvim-treesitter-textobjects** | 基于语法树的对象选择                                                                                                                                                                                |
-| **nvim-colorizer.lua**          | 颜色值（#hex 等）实时着色显示                                                                                                                                                                       |
-| **todo-comments.nvim**          | 高亮并跳转 TODO/FIXME/HACK/NOTE 等注释，行号列显示彩色图标；`]t`/`[t` 跳转，`:TodoQuickFix` 列出全部 TODO                                                                                       |
+| **nvim-colorizer.lua**          | 颜色值（hex 等）实时着色显示                                                                                                                                                                        |
+| **todo-comments.nvim**          | 高亮并跳转 TODO/FIXME/HACK/NOTE 等注释，行号列显示彩色图标；`]t`/`[t` 跳转，`:TodoQuickFix` 列出全部 TODO                                                                                           |
 
 ### 4. Git 集成
 
@@ -220,6 +220,7 @@
 | `<leader>xx`                | Trouble 诊断列表           |
 | `gd` / `gD`                 | 跳转定义 / 声明            |
 | `gr`                        | 查找引用                   |
+| `K`                         | 查看函数/变量说明文档（签名、参数、返回类型，LSP hover） |
 | `gI` / `gy`                 | 跳转实现 / 类型定义        |
 | `gai` / `gao`               | 调用者 / 被调用者          |
 | `<leader>ss` / `<leader>sS` | 当前文件 / 工作区 LSP 符号 |
@@ -253,18 +254,18 @@
 
 ### 11. 多光标（multicursor.nvim）
 
-| 快捷键                          | 功能                                  |
-| ------------------------------- | ------------------------------------- |
-| `<Ctrl+鼠标左键>`               | 在点击位置添加光标（可拖拽框选多处）  |
-| `<Up>` / `<Down>`               | 在主光标 上一行 / 下一行 加光标       |
-| `<leader><Up>` / `<leader><Down>` | 向上 / 向下跳过一行（不加光标）     |
-| `<leader>n` / `<leader>N`      | 下一个 / 上一个相同单词处加光标       |
-| `<leader>s` / `<leader>S`      | 跳过下一个 / 上一个相同单词           |
-| `<C-q>`                         | 临时禁用 / 恢复所有光标               |
-| **多光标模式下**                |                                       |
-| `<Left>` / `<Right>`            | 切换哪个是主光标                      |
-| `<leader>x`                     | 删除主光标                            |
-| `<Esc>`                         | 清除所有光标退出多光标模式            |
+| 快捷键                            | 功能                                 |
+| --------------------------------- | ------------------------------------ |
+| `<Ctrl+鼠标左键>`                 | 在点击位置添加光标（可拖拽框选多处） |
+| `<Up>` / `<Down>`                 | 在主光标 上一行 / 下一行 加光标      |
+| `<leader><Up>` / `<leader><Down>` | 向上 / 向下跳过一行（不加光标）      |
+| `<leader>n` / `<leader>N`         | 下一个 / 上一个相同单词处加光标      |
+| `<leader>s` / `<leader>S`         | 跳过下一个 / 上一个相同单词          |
+| `<C-q>`                           | 临时禁用 / 恢复所有光标              |
+| **多光标模式下**                  |                                      |
+| `<Left>` / `<Right>`              | 切换哪个是主光标                     |
+| `<leader>x`                       | 删除主光标                           |
+| `<Esc>`                           | 清除所有光标退出多光标模式           |
 
 ### 12. 字符跳转（Flash + Hop(已禁用)）
 
@@ -295,7 +296,7 @@
 | `<leader>p`                                | 粘贴系统剪贴板图片（markdown/tex/typst 自动插入对应模板） |
 | `vaf` / `vif`                              | 选择整个函数（包含签名） / 选择函数内部                   |
 | `]t` / `[t`                                | 下一个 / 上一个 TODO/FIXME/HACK 注释                      |
-| `:TodoQuickFix`                            | 把所有 TODO 列到 QuickFix 列表                           |
+| `:TodoQuickFix`                            | 把所有 TODO 列到 QuickFix 列表                            |
 | `:TodoLocList`                             | 把所有 TODO 列到位置列表                                  |
 
 ---
