@@ -75,32 +75,48 @@ return {
         return mode_map[mode] or catppuccin_mocha.blue
       end
 
-      -- ========== 1. 模式指示器（文字版） ==========
+      -- ========== 1. 模式指示器（圆角胶囊版） ==========
       local Mode = {
         init = function(self)
           self.mode = vim.fn.mode(1)
         end,
-        provider = function(self)
-          local mode_text = {
-            n = " NORMAL ",
-            i = " INSERT ",
-            v = " VISUAL ",
-            V = " V-LINE ",
-            ["\22"] = " V-BLOCK ",
-            c = " COMMAND ",
-            s = " SELECT ",
-            S = " S-LINE ",
-            ["\19"] = " S-BLOCK ",
-            R = " REPLACE ",
-            r = " REPLACE ",
-            ["!"] = " SHELL ",
-            t = " TERMINAL ",
-          }
-          return mode_text[self.mode] or (" " .. self.mode:upper() .. " ")
-        end,
-        hl = function()
-          return { bg = get_mode_color(), fg = catppuccin_mocha.base, bold = true }
-        end,
+        -- 左侧圆角箭头：与模式色同色、无背景，紧贴文本形成圆角胶囊
+        {
+          provider = "",
+          hl = function()
+            return { fg = get_mode_color() }
+          end,
+        },
+        {
+          provider = function(self)
+            local mode_text = {
+              n = "NORMAL",
+              i = "INSERT",
+              v = "VISUAL",
+              V = "V-LINE",
+              ["\22"] = "V-BLOCK",
+              c = "COMMAND",
+              s = "SELECT",
+              S = "S-LINE",
+              ["\19"] = "S-BLOCK",
+              R = "REPLACE",
+              r = "REPLACE",
+              ["!"] = "SHELL",
+              t = " TERMINAL ",
+            }
+            return mode_text[self.mode] or (self.mode:upper())
+          end,
+          hl = function()
+            return { bg = get_mode_color(), fg = catppuccin_mocha.base, bold = true }
+          end,
+        },
+        -- 右侧圆角箭头
+        {
+          provider = "",
+          hl = function()
+            return { fg = get_mode_color() }
+          end,
+        },
         update = { "ModeChanged", pattern = "*:*" },
       }
 

@@ -100,6 +100,7 @@
 | **nvim-treesitter-textobjects** | 基于语法树的对象选择                                                                                                                                                                                |
 | **nvim-colorizer.lua**          | 颜色值（hex 等）实时着色显示                                                                                                                                                                        |
 | **todo-comments.nvim**          | 高亮并跳转 TODO/FIXME/HACK/NOTE 等注释，行号列显示彩色图标；`]t`/`[t` 跳转，`:TodoQuickFix` 列出全部 TODO                                                                                           |
+| **rainbow-delimiters.nvim**     | 彩虹括号：圆括号/方括号/花括号按层级显示不同颜色（treesitter 实现）；颜色从主题语义高亮组（Error/Warn/Info/Statement 等）提取，适配 gradient_dracula 等未内置 RainbowDelimiter 高亮的主题           |
 
 ### 4. Git 集成
 
@@ -186,7 +187,6 @@
 | `<Esc>` | 清除搜索高亮            |
 | `vv`    | 选中到匹配的括号（v%）  |
 | `vc`    | 选中当前单词（viw）     |
-| `vl`    | 进入行选择模式（V）     |
 | `dw`    | 删除当前单词（diw）     |
 
 ### 6. 复制粘贴
@@ -214,16 +214,16 @@
 
 ### 8. 代码导航与 LSP
 
-| 快捷键                      | 功能                       |
-| --------------------------- | -------------------------- |
-| `<leader>o`                 | 切换 Aerial 代码大纲       |
-| `<leader>xx`                | Trouble 诊断列表           |
-| `gd` / `gD`                 | 跳转定义 / 声明            |
-| `gr`                        | 查找引用                   |
+| 快捷键                      | 功能                                                     |
+| --------------------------- | -------------------------------------------------------- |
+| `<leader>o`                 | 切换 Aerial 代码大纲                                     |
+| `<leader>xx`                | Trouble 诊断列表                                         |
+| `gd` / `gD`                 | 跳转定义 / 声明                                          |
+| `gr`                        | 查找引用                                                 |
 | `K`                         | 查看函数/变量说明文档（签名、参数、返回类型，LSP hover） |
-| `gI` / `gy`                 | 跳转实现 / 类型定义        |
-| `gai` / `gao`               | 调用者 / 被调用者          |
-| `<leader>ss` / `<leader>sS` | 当前文件 / 工作区 LSP 符号 |
+| `gI` / `gy`                 | 跳转实现 / 类型定义                                      |
+| `gai` / `gao`               | 调用者 / 被调用者                                        |
+| `<leader>ss` / `<leader>sS` | 当前文件 / 工作区 LSP 符号                               |
 
 ### 9. Snacks Picker（查找器）
 

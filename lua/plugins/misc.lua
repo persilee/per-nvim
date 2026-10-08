@@ -115,6 +115,50 @@ return {
           extra = true, -- gco/gcO 额外映射
         },
       })
+      -- 修复：Neovim 0.12 对无 treesitter parser 的文件（如 .conf）
+      -- `get_parser` 返回 nil 而非报错，导致 Comment.nvim 内部
+      -- ft.contains(nil) 崩溃（报 [Comment.nvim] nil 警告），gcc 注释无效。
+      -- 这里在 parser 无效时回退到 filetype 的静态注释符映射。
+      local ft = require("Comment.ft")
+      local orig_calculate = ft.calculate
+      ---@diagnostic disable-next-line: duplicate-set-field
+      ft.calculate = function(ctx)
+        local ok, parser = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
+        if not ok or not parser then
+          return ft.get(vim.bo.filetype, ctx.ctype)
+        end
+        return orig_calculate(ctx)
+      end
+    end,
+  },
+
+  -- 彩虹括号：不同层级括号不同颜色（treesitter 实现）
+  -- 圆括号/方括号/花括号分层着色，颜色自动跟随 colorscheme
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    config = function()
+      require("rainbow-delimiters.setup").setup({})
+
+      -- 主题适配：gradient_dracula 等主题未定义 RainbowDelimiter* 高亮组，
+      -- 插件会 fallback 到内置默认色导致颜色怪异。
+      -- 这里从当前主题的语义高亮组提取颜色，保证与主题配色一致。
+      local function fg(name, fallback)
+        local hl = vim.api.nvim_get_hl(0, { name = name })
+        return hl.fg or fallback
+      end
+      local rainbow = {
+        RainbowDelimiterRed = fg("DiagnosticError", "#f38ba8"),
+        RainbowDelimiterYellow = fg("DiagnosticWarn", "#f9e2af"),
+        RainbowDelimiterBlue = fg("DiagnosticInfo", "#89b4fa"),
+        RainbowDelimiterOrange = fg("DiagnosticWarn", "#fab387"),
+        RainbowDelimiterGreen = fg("DiagnosticOk", "#a6e3a1"),
+        RainbowDelimiterViolet = fg("Statement", "#cba6f7"),
+        RainbowDelimiterCyan = fg("Constant", "#94e2d5"),
+      }
+      for group, color in pairs(rainbow) do
+        vim.api.nvim_set_hl(0, group, { fg = color })
+      end
     end,
   },
 }

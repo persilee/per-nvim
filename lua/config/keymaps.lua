@@ -25,6 +25,10 @@ map("n", "<leader>c", function()
   -- Snacks.bufdelete({ force = true })
 end, opts)
 
+-- 禁用触控板/鼠标水平滚动（防误触左右滑动视口）
+vim.keymap.set({ "n", "v", "i" }, "<ScrollWheelLeft>", "<Nop>")
+vim.keymap.set({ "n", "v", "i" }, "<ScrollWheelRight>", "<Nop>")
+
 -- 分屏操作
 map("n", "<leader><Left>", "<C-w>h", opts) -- 移动到左边窗口
 map("n", "<leader><Down>", "<C-w>j", opts) -- 移动到下边窗口
@@ -72,7 +76,6 @@ map("v", "p", [["+p]], opts)
 -- vv: 选择到匹配的括号，vc: 选择当前单词，vl: 进入行选择模式
 map("n", "vv", "v%", opts)
 map("n", "vc", "viw", opts)
-map("n", "vl", "V", opts)
 
 -- 清除查找高亮
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", opts)
@@ -83,6 +86,10 @@ map("n", "<Esc>", "<cmd>nohlsearch<CR>", opts)
 
 -- 打开诊断窗口
 map("n", "<leader>xx", ":Trouble diagnostics toggle<CR>", opts)
+
+-- LSP 重命名变量（所有引用同步修改）
+map("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
+map("n", "<F2>", ":Lspsaga rename<CR>", opts) -- VSCode 习惯
 
 -- 在你的 keymaps.lua 中添加
 map("v", "<Tab>", ">", opts)

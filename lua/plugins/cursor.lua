@@ -83,7 +83,7 @@ return {
   },
   {
     "sphamba/smear-cursor.nvim",
-
+    enabled = false,
     opts = {
       -- ========== 核心动画参数（解决抖动最关键） ==========
       -- 光标头部跟随速度：越高越跟手，太高会生硬
