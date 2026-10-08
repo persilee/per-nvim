@@ -299,8 +299,9 @@ return {
       }
 
       -- ========== 9. 光标位置 ==========
+      -- %l 当前行 / %c 列 / %L 总行数 / %p 光标所在百分比
       local Ruler = {
-        provider = " %l:%c ",
+        provider = " %l:%c / %L(%p%%)",
         hl = { fg = colors.fg, bold = true },
       }
 
