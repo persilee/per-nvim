@@ -1,5 +1,6 @@
 # Neovim 配置功能与快捷键总结
 
+> [!NOTE]
 > 配置目录：`~/.config/nvim` · 包管理器：lazy.nvim
 
 ---
@@ -281,6 +282,7 @@
 | `<leader>jF`                               | Hop：当前行内反向单字符跳转                                       |
 | `<leader>jl` / `<leader>jw` / `<leader>jp` | Hop：跳转到行 / 单词 / 正则匹配                                   |
 
+> [!IMPORTANT]
 > 注：flash 的 `s` 会覆盖 Vim 原生 `s`（删除字符进入插入）。Hop 已在 `misc.lua` 中 `enabled = false`，其键位当前不生效，保留仅作参考。flash 的 search 模式（接管 `/` 搜索）已禁用。
 
 ### 13. 其它
@@ -303,6 +305,7 @@
 
 ## 五、Neovim 常用内置快捷键补充
 
+> [!NOTE]
 > 以下为 Neovim / Vim 通用操作，配置未覆盖但日常高频使用。
 
 ### 1. 模式切换与光标移动

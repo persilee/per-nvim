@@ -184,7 +184,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 local function clear_markdown_bg()
   local groups = {
     "RenderMarkdownCode", -- 代码块背景
-    "RenderMarkdownCodeInline", -- 行内代码 `...` 背景
+    -- "RenderMarkdownCodeInline", -- 行内代码 `...` 背景
     "RenderMarkdownCodeFallback",
     "RenderMarkdownCodeBorder",
     "RenderMarkdownH1Bg",

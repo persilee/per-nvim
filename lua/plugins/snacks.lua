@@ -199,7 +199,7 @@ return {
     {
       "<leader>fh",
       function()
-        Snacks.picker.help({ layout = "ivy_splitp" })
+        Snacks.picker.help({ layout = "ivy_split" })
       end,
       desc = "查找帮助文档",
     },

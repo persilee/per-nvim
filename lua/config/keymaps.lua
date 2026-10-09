@@ -126,3 +126,12 @@ vim.keymap.set("n", "<leader>cc", function()
   vim.api.nvim_set_hl(0, "Cursor", { fg = "#1e1e2e", bg = "#ff79c6" })
   vim.notify("光标已切换为粉色方块", vim.log.levels.INFO)
 end, { desc = "设置光标为粉色方块样式", silent = true })
+
+-- 智能 tag 跳转：优先帮助文档（helptags），失败则回退 ctags（:tag）
+vim.keymap.set("n", "<C-]>", function()
+  local word = vim.fn.expand("<cword>")
+  local ok = pcall(vim.cmd, "help " .. word)
+  if not ok then
+    vim.cmd("tag " .. word)
+  end
+end, { desc = "智能 tag 跳转：优先帮助文档" })
