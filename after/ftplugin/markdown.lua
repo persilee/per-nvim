@@ -149,7 +149,7 @@ local CALL_BODY_NS = vim.api.nvim_create_namespace("CalloutBodyHL")
 
 -- ===== 正文浅色组：标题色与白色混合，主次分明 =====
 -- 每种 callout 的正文用一个独立高亮组 CalloutBody<Key>，颜色比标题浅 35%
-local BODY_LIGHTEN = 0.66
+local BODY_LIGHTEN = 0.36
 
 local function lighten(hex, ratio)
   local r = tonumber(hex:sub(2, 3), 16)

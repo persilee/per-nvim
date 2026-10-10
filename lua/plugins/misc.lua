@@ -148,7 +148,7 @@ return {
         return hl.fg or fallback
       end
       local rainbow = {
-        RainbowDelimiterRed = fg("DiagnosticError", "#f38ba8"),
+        RainbowDelimiterRed = "#ff79c6",
         RainbowDelimiterYellow = fg("DiagnosticWarn", "#f9e2af"),
         RainbowDelimiterBlue = fg("DiagnosticInfo", "#89b4fa"),
         RainbowDelimiterOrange = fg("DiagnosticWarn", "#fab387"),
