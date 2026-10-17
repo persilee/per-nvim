@@ -45,7 +45,7 @@ return {
     -- 简单自定义
     default_file_explorer = true, -- 接管目录buffer，nvim . 直接打开oil
     view_options = {
-      show_hidden = false, -- 默认不显示隐藏文件 g. 切换
+      show_hidden = true, -- 默认显示隐藏文件,可用 g. 切换
     },
     columns = {
       "icon",
@@ -76,7 +76,7 @@ return {
 
       -- 禁用默认的 g. 快捷键
       -- Oil 默认 g. 是切换显示/隐藏隐藏文件，这里禁用，改用下面的 zh 实现相同功能
-      ["g."] = false,
+      -- ["g."] = false,
 
       -- 绑定 zh 为「切换隐藏文件显示」，替代默认的 g.
       -- 采用 z 前缀更符合 Vim 原生折叠/显示类操作的肌肉记忆

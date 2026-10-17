@@ -86,7 +86,7 @@ return {
         {
           -- 左侧圆角箭头：与模式色同色、无背景，紧贴文本形成圆角胶囊
           {
-            provider = "█",
+            provider = "",
             hl = function()
               return { fg = get_mode_color() }
             end,
@@ -116,7 +116,7 @@ return {
           },
           -- 右侧圆角箭头
           {
-            provider = "█",
+            provider = "",
             hl = function()
               return { fg = get_mode_color() }
             end,
@@ -125,7 +125,7 @@ return {
         -- 变体 2：空间不足，短名胶囊
         {
           {
-            provider = "█",
+            provider = "",
             hl = function()
               return { fg = get_mode_color() }
             end,
@@ -154,7 +154,7 @@ return {
             end,
           },
           {
-            provider = "█",
+            provider = "",
             hl = function()
               return { fg = get_mode_color() }
             end,
@@ -166,7 +166,7 @@ return {
           -- 导致 WinResized/VimResized 不触发、flexible 不重新评估。
           -- ModeChanged 无 pattern 时默认匹配所有模式变化，行为等价。
           "ModeChanged",
-          "WinResized",  -- 窗口宽度变化时重新评估 flexible（长名/短名切换）
+          "WinResized", -- 窗口宽度变化时重新评估 flexible（长名/短名切换）
           "VimResized",
         },
       }
@@ -352,18 +352,38 @@ return {
       -- ========== 9. 光标位置 ==========
       -- %l 当前行 / %c 列：背景跟随模式（普通=蓝/插入=绿/可视=紫...）
       local Ruler = {
-        provider = "  %l:%c  ",
-        hl = function()
-          return { bg = get_mode_color(), fg = catppuccin_mocha.base, bold = true }
-        end,
+        -- 文字块：背景跟随模式（普通=蓝/插入=绿/可视=紫...）
+        {
+          provider = "  %l:%c ",
+          hl = function()
+            return { bg = get_mode_color(), fg = catppuccin_mocha.base, bold = true }
+          end,
+        },
+        -- 右侧圆角箭头：与模式色同色、无背景，形成圆角胶囊收尾
+        {
+          provider = "",
+          hl = function()
+            return { fg = get_mode_color() }
+          end,
+        },
         update = { "ModeChanged", pattern = "*:*" },
       }
 
       -- ========== 10. 百分比（左侧，固定粉色） ==========
       -- %p 光标所在文件百分比
       local Percent = {
-        provider = " %p%% ",
-        hl = { bg = "#44475a", fg = catppuccin_mocha.text, bold = true },
+        {
+          provider = "",
+          hl = function()
+            return { fg = "#44475a" }
+          end,
+        },
+        {
+          provider = "%p%% ",
+          hl = function()
+            return { bg = "#44475a", fg = catppuccin_mocha.text, bold = true }
+          end,
+        },
       }
 
       -- ========== 组装完整状态栏 ==========

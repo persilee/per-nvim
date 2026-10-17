@@ -127,11 +127,15 @@ vim.keymap.set("n", "<leader>cc", function()
   vim.notify("光标已切换为粉色方块", vim.log.levels.INFO)
 end, { desc = "设置光标为粉色方块样式", silent = true })
 
--- 智能 tag 跳转：优先帮助文档（helptags），失败则回退 ctags（:tag）
+-- 智能 tag 跳转：优先帮助文档（helptags），失败则回退 ctags（:tag），再失败仅提示不报错
 vim.keymap.set("n", "<C-]>", function()
   local word = vim.fn.expand("<cword>")
-  local ok = pcall(vim.cmd, "help " .. word)
+  -- pcall 包一层匿名函数：消除 vim.cmd(table) 的类型诊断警告
+  local ok = pcall(function() vim.cmd("help " .. word) end)
   if not ok then
-    vim.cmd("tag " .. word)
+    local tag_ok = pcall(function() vim.cmd("tag " .. word) end)
+    if not tag_ok then
+      vim.notify("未找到「" .. word .. "」的帮助或 tag", vim.log.levels.WARN)
+    end
   end
-end, { desc = "智能 tag 跳转：优先帮助文档" })
+end, { desc = "智能 tag 跳转：优先帮助文档，失败仅提示" })

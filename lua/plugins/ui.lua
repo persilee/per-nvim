@@ -68,7 +68,7 @@ return {
     event = "VeryLazy",
     build = ":TSUpdate", -- lazy.nvim 里用 build，不是 run
     opts = {
-      ensure_installed = { "c", "cpp", "lua", "python", "cmake" }, -- 必装语言
+      ensure_installed = { "c", "cpp", "lua", "python", "cmake", "ini" }, -- 必装语言
       highlight = {
         enable = true,
       },

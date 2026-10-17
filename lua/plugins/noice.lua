@@ -13,6 +13,8 @@ return {
     })
     -- 匹配 Catppuccin Mocha 背景色，其他口味替换对应色值即可
     vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#1e1e2e" })
+    -- 边框显式用亮灰（防止透明浮窗模式下边框被吞掉看不见）
+    vim.api.nvim_set_hl(0, "NotifyBorder", { fg = "#b2bbc2", bg = "NONE" })
   end,
   config = function()
     require("noice").setup({
@@ -55,6 +57,14 @@ return {
 
       -- 过滤保存文件通知
       routes = {
+        -- 过滤 LSP attach 通知（"LSP attached: xxx"），不弹窗不打扰
+        {
+          filter = {
+            event = "notify",
+            find = "LSP attached", -- 匹配消息文本
+          },
+          opts = { skip = true }, -- 直接跳过，不显示也不记入历史
+        },
         {
           filter = {
             event = "notify",
@@ -87,6 +97,21 @@ return {
         inc_rename = false,
         lsp_doc_border = false,
         incognito = false,
+      },
+
+      -- 全局视图样式：弹窗统一用完整 rounded 边框（防止边框被吞掉只剩上下线）
+      -- 尺寸改为自适应：宽度 60%、高度自适应，避免固定 120 列超出终端被裁掉左右边框
+      views = {
+        popup = {
+          border = {
+            style = "rounded",
+            padding = { 0, 1 },
+          },
+          size = {
+            width = "60%",
+            height = "auto",
+          },
+        },
       },
     })
   end,

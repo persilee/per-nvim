@@ -62,3 +62,11 @@ vim.opt.iskeyword:append("-")
 vim.o.whichwrap = vim.o.whichwrap .. "<>,h,l"
 
 vim.o.winborder = "rounded"
+
+-- 文件类型识别：cava 配置文件（[section] + key = value + ; 注释 → dosini 语法高亮）
+-- 注意：pattern 会被自动加 ^ 和 $ 锚定，不要自己写 $，否则变成字面字符匹配不到
+vim.filetype.add({
+  pattern = {
+    [".*/cava/config"] = "dosini",
+  },
+})
