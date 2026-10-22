@@ -139,3 +139,8 @@ vim.keymap.set("n", "<C-]>", function()
     end
   end
 end, { desc = "智能 tag 跳转：优先帮助文档，失败仅提示" })
+
+-- Esc 清除所有 noice 通知（消息、提示等）
+vim.keymap.set("n", "<Esc>", function()
+  require("noice").cmd("dismiss")
+end, { desc = "清除所有通知 (noice dismiss)", silent = true })

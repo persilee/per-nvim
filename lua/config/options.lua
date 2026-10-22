@@ -44,7 +44,7 @@ vim.opt.cursorlineopt = "number" -- 只高亮行号，而不是整行
 vim.diagnostic.config({
   signs = false, -- ❌ 左侧 gutter 不显示 E/W
   -- underline = true, -- 保留下划线标记
-  -- virtual_text = true, -- 保留行内提示文字
+  -- virtual_text = { position = "below" }, -- 保留行内提示（当前行下方；实际以 lsp.lua 中的配置为准）
   -- update_in_insert = false, -- 插入模式不更新（可选）
 })
 

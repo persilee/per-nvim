@@ -53,7 +53,7 @@ return {
     },
 
     notifier = {
-      enabled = false,
+      enabled = true,
       timeout = 2000,
     },
 
@@ -213,7 +213,7 @@ return {
     {
       "<leader>fk",
       function()
-        Snacks.picker.keymaps({ layout = "ivy_splitp" })
+        Snacks.picker.keymaps({ layout = "ivy_split" })
       end,
       desc = "查找快捷键",
     },
@@ -223,14 +223,6 @@ return {
         Snacks.picker.notifications({ layout = "dropdown" })
       end,
       desc = "Find Notification",
-    },
-
-    {
-      "<leader>n",
-      function()
-        Snacks.notifier.show_history()
-      end,
-      desc = "Notification history",
     },
     {
       "<leader>N",

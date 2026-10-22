@@ -64,6 +64,12 @@ local themes = {
       --   fg = "#b2bbc2",
       --   italic = true,
       -- })
+      -- 浮窗边框调亮：透明背景（kitty）下默认边框色不可见
+      vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#b2bbc2" })
+      -- snacks picker 的边框高亮是 FloatBorder -> Border 链接，必须连 Border 一起调亮
+      vim.api.nvim_set_hl(0, "Border", { fg = "#b2bbc2" })
+      -- snacks picker 外层块（box 窗口）的边框组默认是空定义（无颜色），必须显式调亮
+      vim.api.nvim_set_hl(0, "SnacksPickerBoxBorder", { fg = "#b2bbc2" })
     end,
   },
 
