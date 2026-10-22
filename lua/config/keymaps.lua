@@ -91,6 +91,11 @@ map("n", "<leader>xx", ":Trouble diagnostics toggle<CR>", opts)
 map("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 map("n", "<F2>", ":Lspsaga rename<CR>", opts) -- VSCode 习惯
 
+-- LSP 代码操作（快速修复/重构/生成代码等，用 tiny-code-action 可视化执行）
+vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+  require("tiny-code-action").code_action()
+end, { desc = "代码操作 (Code Actions)", noremap = true, silent = true })
+
 -- 在你的 keymaps.lua 中添加
 map("v", "<Tab>", ">", opts)
 map("v", "<S-Tab>", "<", opts) -- Shift+Tab 减少缩进

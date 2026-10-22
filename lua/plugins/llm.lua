@@ -46,10 +46,10 @@ return {
       prompt = "You are a helpful chinese assistant.", -- 系统提示词（模型角色设定）
       spinner = {
         text = {
-          "󰧞󰧞",
-          "󰧞󰧞",
-          "󰧞󰧞",
-          "󰧞󰧞",
+          "∙∙∙",
+          "∙∙∙",
+          "∙∙󰧞∙",
+          "∙∙∙󰧞",
         },
         hl = "Title",
       },
@@ -246,6 +246,45 @@ You must:
               lua = [[- For the Lua language, you should use the LDoc style.
 - Start all comment lines with "---".
 ]],
+            },
+          },
+        },
+
+        -- ⑧ 代码补全：输入时自动触发（completion_handler，自动集成到 blink.cmp）
+        Completion = {
+          handler = "completion_handler",
+          opts = {
+            -- DeepSeek 补全端点（官方 beta completions 接口）
+            url = "https://api.deepseek.com/beta/completions",
+            model = "deepseek-chat",
+            api_type = "deepseek",
+            fetch_key = function()
+              return vim.env.LLM_KEY -- 读取环境变量 LLM_KEY（与主配置共用）
+            end,
+
+            -- 补全参数
+            n_completions = 2, -- 同时生成的候选数量
+            context_window = 512, -- 上下文窗口（送入模型的代码行数上限）
+            max_tokens = 256, -- 单次补全最大 token 数
+
+            -- 触发规则
+            filetypes = { sh = false }, -- 指定关闭补全的文件类型
+            default_filetype_enabled = true, -- 未特别列出的文件类型默认开启补全
+            auto_trigger = true, -- 自动触发（无需手动按键）
+            only_trigger_by_keywords = true, -- 仅在输入 @ . ( [ : 空格 等关键词后才触发
+            style = nil, -- 自动检测补全前端：用户用 blink.cmp → 集成到 blink 菜单；否则 virtual_text
+            timeout = 10, -- 单次请求超时（秒）
+            throttle = 1000, -- 请求节流间隔（毫秒）
+            debounce = 400, -- 防抖间隔（毫秒）
+
+            -- virtual_text 风格时的按键（blink.cmp 风格下使用 blink 自身按键）
+            keymap = {
+              virtual_text = {
+                accept = { mode = "i", keys = "<A-a>" }, -- 接受补全
+                next = { mode = "i", keys = "<A-n>" }, -- 下一条候选
+                prev = { mode = "i", keys = "<A-p>" }, -- 上一条候选
+                toggle = { mode = "n", keys = "<leader>cp" }, -- 启用/停用补全
+              },
             },
           },
         },

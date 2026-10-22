@@ -6,6 +6,7 @@ return {
     "onsails/lspkind-nvim",
     "nvim-mini/mini.icons",
     "L3MON4D3/LuaSnip",
+    "Kurama622/llm.nvim", -- llm.nvim 代码补全（blink 前端 source）
   },
 
   -- use a release tag to download pre-built binaries
@@ -51,6 +52,13 @@ return {
       ["<Esc>"] = { "hide", "fallback" },
       ["<C-d>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+      -- 手动触发 LLM 代码补全（只看 LLM 建议）
+      ["<C-y>"] = {
+        function(cmp)
+          cmp.show({ providers = { "llm" } })
+        end,
+        "fallback",
+      },
     },
 
     appearance = {
@@ -61,6 +69,10 @@ return {
 
     -- (Default) Only show the documentation popup when manually triggered
     completion = {
+      trigger = {
+        prefetch_on_insert = false, -- LLM 补全不预取（按需请求，省 token）
+        show_on_blocked_trigger_characters = {}, -- 允许空格等字符触发（llm 前端触发字符：@ . ( [ : { 空格 /）
+      },
       list = {
         selection = {
           preselect = false,
@@ -77,7 +89,10 @@ return {
             kind_icon = {
               text = function(ctx)
                 local icon = ctx.kind_icon
-                if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                if ctx.source_name == "LLM" then
+                  -- LLM 补全：固定机器人图标（无标准 kind）
+                  icon = ""
+                elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
                   local ok, dev_icon = pcall(function()
                     return require("mini.icons").get("file", ctx.label)
                   end)
@@ -96,7 +111,10 @@ return {
               -- keep the highlight groups in sync with the icons.
               highlight = function(ctx)
                 local hl = ctx.kind_hl
-                if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                if ctx.source_name == "LLM" then
+                  -- LLM 补全专属高亮（Dracula 紫）
+                  hl = "BlinkCmpKindLLM"
+                elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
                   local ok, _, dev_hl = pcall(function()
                     -- mini.icons.get 返回两个值：图标、高亮组
                     return require("mini.icons").get("file", ctx.label)
@@ -107,6 +125,20 @@ return {
                 end
                 return hl
               end,
+            },
+
+            kind = {
+              -- 第 1 列的 kind 文字（如 "llm"）：LLM 项也用专属紫
+              highlight = function(ctx)
+                if ctx.source_name == "LLM" then
+                  return "BlinkCmpKindLLM"
+                end
+                return ctx.kind_hl
+              end,
+            },
+
+            label = {
+              -- 生成的代码文字保持默认（白色），不加 LLM 紫色
             },
 
             source_name = {
@@ -143,7 +175,23 @@ return {
     },
 
     sources = {
-      default = { "lsp", "path", "snippets", "buffer" },
+      default = { "lsp", "path", "snippets", "buffer", "llm" }, -- llm = LLM 代码补全
+
+      per_filetype = {
+        -- 对话窗口（llm filetype）：只用 llm 相关 source，lsp/path 等不混入
+        llm = { inherit_defaults = false },
+      },
+
+      providers = {
+        -- LLM 代码补全（llm.nvim completion_handler 的 blink 前端）
+        llm = {
+          name = "LLM",
+          module = "llm.common.completion.frontends.blink",
+          timeout_ms = 10000, -- 单次请求超时（毫秒）
+          score_offset = 100, -- 排序权重（提高 LLM 建议的排名）
+          async = true,
+        },
+      },
     },
 
     cmdline = {
@@ -170,4 +218,14 @@ return {
     fuzzy = { implementation = "prefer_rust_with_warning" },
   },
   opts_extend = { "sources.default" },
+  config = function(_, opts)
+    require("blink.cmp").setup(opts)
+    -- LLM 补全专属 kind 高亮（Dracula 紫）
+    -- colorscheme 重载会清空自定义高亮，用 autocmd 兜底重设
+    local function set_llm_hl()
+      vim.api.nvim_set_hl(0, "BlinkCmpKindLLM", { fg = "#bd93f9", default = true })
+    end
+    vim.api.nvim_create_autocmd("ColorScheme", { callback = set_llm_hl })
+    set_llm_hl()
+  end,
 }

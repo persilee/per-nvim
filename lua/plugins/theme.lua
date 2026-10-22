@@ -70,6 +70,9 @@ local themes = {
       vim.api.nvim_set_hl(0, "Border", { fg = "#b2bbc2" })
       -- snacks picker 外层块（box 窗口）的边框组默认是空定义（无颜色），必须显式调亮
       vim.api.nvim_set_hl(0, "SnacksPickerBoxBorder", { fg = "#b2bbc2" })
+      -- 代码块背景：半透明感近似色（nvim 高亮不支持 alpha，#282a36 与 kitty 底 #1E1E2E 的视觉等效中间色，
+      -- 比主背景略亮一档、柔和可辨，模拟"半透明层"效果；想深/浅直接改这行色值）
+      vim.api.nvim_set_hl(0, "RenderMarkdownCodeDim", { bg = "#2e3040" })
     end,
   },
 

@@ -4,6 +4,7 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.icons" },
+    ft = { "markdown", "llm" },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
@@ -83,6 +84,8 @@ return {
         language_name = true,
         -- avoid making headings ugly
         highlight_inline = "RenderMarkdownCodeInfo",
+        -- 去掉所有语言代码块的背景色（true = 全部禁用；也可填语言名列表，如 { 'diff' }）
+        disable_background = true,
       },
       heading = {
         icons = heading_icons,
@@ -149,12 +152,10 @@ return {
         hyperlink = " ",
       },
       anti_conceal = {
-        -- disabled_modes = { "n" },
-        ignore = {
-          -- bullet = true, -- render bullet in insert mode
-          head_border = true,
-          head_background = true,
-        },
+        enabled = true,
+        -- 正常模式下禁用反隐藏 → 光标行也保持渲染
+        -- 插入模式不禁用 → 光标行显示源码方便编辑
+        disabled_modes = { "n" },
       },
       win_options = { concealcursor = { rendered = "vc" } },
       completions = {

@@ -23,5 +23,13 @@ return {
 
     -- 把上面查到的高亮组替换成对应名称，颜色值改成你想要的蓝色
     vim.api.nvim_set_hl(0, "MiniIconsAzure", { fg = "#61afef" })
+    -- 稳定兜底：colorscheme 加载会清空自定义高亮，且 mini.icons 在 ColorScheme 事件里
+    -- 会用默认色（Azure 默认 link 到 Function，主题里是绿色系）重设——导致图标颜色不稳定。
+    -- 注册在 mini.icons 之后的 autocmd 保证最终覆盖为蓝色。
+    vim.api.nvim_create_autocmd("ColorScheme", {
+      callback = function()
+        vim.api.nvim_set_hl(0, "MiniIconsAzure", { fg = "#61afef" })
+      end,
+    })
   end,
 }
