@@ -6,7 +6,7 @@ return {
     "onsails/lspkind-nvim",
     "nvim-mini/mini.icons",
     "L3MON4D3/LuaSnip",
-    "Kurama622/llm.nvim", -- llm.nvim 代码补全（blink 前端 source）
+    "Kurama622/llm.nvim", -- llm.nvim 代码补全（blink 前端 source，改手动触发）
   },
 
   -- use a release tag to download pre-built binaries
@@ -17,17 +17,27 @@ return {
 
       ["<Tab>"] = {
         function(cmp)
-          -- 1. 如果补全菜单可见，选择下一项（不自动插入）
+          -- 1. blink 菜单可见 → 优先操作菜单（选择下一项）
           if cmp.is_visible() then
             return cmp.select_next()
           end
 
-          -- 2. 如果处于 snippet 编辑状态，跳转到下一个占位符
+          -- 2. 无菜单时：接受 Supermaven 行内建议（渐进式补全）
+          -- 注意：须 vim.schedule 延迟执行——blink keymap 回调上下文中不允许改文本（E565）
+          local ok, suggestion = pcall(require, "supermaven-nvim.completion_preview")
+          if ok and suggestion.has_suggestion() then
+            vim.schedule(function()
+              suggestion.on_accept_suggestion()
+            end)
+            return true -- 已处理，阻止 fallback 插入 Tab
+          end
+
+          -- 3. 如果处于 snippet 编辑状态，跳转到下一个占位符
           if cmp.snippet_active({ direction = 1 }) then
             return cmp.snippet_forward()
           end
 
-          -- 3. 否则，交还给 fallback（比如插入 <Tab> 字符）
+          -- 4. 否则，交还给 fallback（比如插入 <Tab> 字符）
           return false -- 等价于触发 'fallback'
         end,
         "fallback", -- 安全兜底（虽然函数已处理，但保留更健壮）
@@ -91,7 +101,7 @@ return {
                 local icon = ctx.kind_icon
                 if ctx.source_name == "LLM" then
                   -- LLM 补全：固定机器人图标（无标准 kind）
-                  icon = ""
+                  icon = ""
                 elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
                   local ok, dev_icon = pcall(function()
                     return require("mini.icons").get("file", ctx.label)
@@ -128,7 +138,14 @@ return {
             },
 
             kind = {
-              -- 第 1 列的 kind 文字（如 "llm"）：LLM 项也用专属紫
+              -- 第 1 列的 kind 文字：LLM 项显示为 "LLM"（其余保持 LSP 标准 kind）
+              text = function(ctx)
+                if ctx.source_name == "LLM" then
+                  return "LLM"
+                end
+                return ctx.kind
+              end,
+              -- LLM 项 kind 文字用专属紫
               highlight = function(ctx)
                 if ctx.source_name == "LLM" then
                   return "BlinkCmpKindLLM"
@@ -175,7 +192,7 @@ return {
     },
 
     sources = {
-      default = { "lsp", "path", "snippets", "buffer", "llm" }, -- llm = LLM 代码补全
+      default = { "lsp", "path", "snippets", "buffer" },
 
       per_filetype = {
         -- 对话窗口（llm filetype）：只用 llm 相关 source，lsp/path 等不混入
@@ -183,7 +200,7 @@ return {
       },
 
       providers = {
-        -- LLM 代码补全（llm.nvim completion_handler 的 blink 前端）
+        -- LLM 代码补全（llm.nvim）：改为 <C-y> 手动触发
         llm = {
           name = "LLM",
           module = "llm.common.completion.frontends.blink",

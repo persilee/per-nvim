@@ -238,7 +238,8 @@ You must:
 - Place the generated docstring before the start of the code.
 - Follow the format of examples carefully if the examples are provided.
 - Use Markdown formatting in your answers.
-- Include the programming language name at the start of the Markdown code blocks.]],
+- Include the programming language name at the start of the Markdown code blocks.
+- Generate in Chinese.]],
           handler = "action_handler", -- 在源文件上以 diff 形式展示
           opts = {
             only_display_diff = true, -- 只显示 diff（不直接写入）
@@ -263,9 +264,10 @@ You must:
             end,
 
             -- 补全参数
-            n_completions = 2, -- 同时生成的候选数量
-            context_window = 512, -- 上下文窗口（送入模型的代码行数上限）
-            max_tokens = 256, -- 单次补全最大 token 数
+            n_completions = 1, -- 同时生成的候选数量
+            context_window = 12000, -- 让模型看到当前文件更多上下文（字符数）
+            context_ratio = 0.75, -- 光标前占 75%（代码通常在文件前部）
+            max_tokens = 4096, -- 单次补全最大 token 数
 
             -- 触发规则
             filetypes = { sh = false }, -- 指定关闭补全的文件类型
